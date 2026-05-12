@@ -209,8 +209,6 @@ function
   }
 }
 
-
-
 function
   _db_get(
     _db_path,
@@ -260,6 +258,114 @@ function
     _db =
       _json_read(
         _db_path);
+  }
+}
+
+function
+  _input_type_auto_detect() {
+  if ( input_type == "" ) {
+    if ( isNaN(target_chain) ) {
+      input_type =
+        "name";
+    }
+    else {
+      input_type =
+        "id";
+    }
+  }
+}
+
+function
+  _db_path_auto_detect() {
+  let
+    _chains,
+    _db,
+    _db_split,
+    _db_fallback,
+    _db_fallback_split,
+    _type_primary,
+    _type_fallback,
+    _msg;
+  if ( user_level == "y" ) {
+    _type_primary =
+      "user";
+    _type_fallback =
+      "system";
+  }
+  else if ( user_level == "n" ) {
+    _type_primary =
+      "system";
+    _type_primary =
+      "user";
+  }
+  _db =
+    _db_default_path_get(
+      _type_primary,
+      "unified");
+  _db_split =
+    _db_default_path_get(
+      _type_primary,
+      "split");
+  _db_fallback =
+    _db_default_path_get(
+      _type_fallback,
+      "unified");
+  _db_fallback_split =
+    _db_default_path_get(
+      _type_fallback,
+      "split");
+  if ( _file_exists(
+           _db_split) ) {
+    db_paths.push(
+      _db_split);
+  }
+  else {
+    _msg =
+      `Default per-network database ` +
+      `'${_db_split}' ` +
+      `not found, trying '${_db}'.`;
+    _msg_info(
+      _msg);
+  }
+  if ( _file_exists(
+         _db) ) {
+    db_paths.push(
+      _db);
+  }
+  else {
+    _msg =
+      `Default unified database ` +
+      `'${_db_split}' ` +
+      `not found, trying '${_db}'.`;
+    _msg_info(
+      _msg);
+  }
+  if ( _file_exists(
+           _db_fallback_split) ) {
+    db_paths.push(
+      _db_fallback_split);
+  }
+  else {
+    _msg =
+      `Fallback per-network database ` +
+      `'${_db_fallback_split}' ` +
+      `not found, trying '${_db_fallback}'.`;
+    _msg_info(
+      _msg);
+  }
+  if ( _file_exists(
+         _db_fallback) ) {
+    db_paths.push(
+      _db_fallback);
+  }
+  else {
+    _msg =
+      `Fallback database ` +
+      `'${_db_fallback_split}' ` +
+      `not found too!`;
+    _msg_error(
+      _msg,
+      1);
   }
 }
 
@@ -359,12 +465,16 @@ function
 }
 
 module.exports = {
+  _db_path_auto_detect:
+    _db_path_auto_detect,
   _evm_chains_db_path_get:
     _evm_chains_db_path_get,
   _evm_chain_info_get:
     _evm_chain_info_get,
+  _input_type_auto_detect:
+    _input_type_auto_detect,
   _rpc_backend_get:
     _rpc_backend_get,
   _rpc_backends_get:
-    _rpc_backends_get
+    _rpc_backends_get;
 };
