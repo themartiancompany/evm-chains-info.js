@@ -524,7 +524,7 @@ function
 
 function
   _evm_chains_info_set(
-    _hurr) {
+    _input_type) {
   if ( _input_type == "id" ) {
     console.log(
       _hurr);
@@ -550,6 +550,18 @@ function
       _selection_method,
       _db_paths);
   }
+  else if ( _target_command == "set" ) {
+    _evm_chains_info_set(
+      _input_type);
+  }
+  else {
+    _msg =
+      `Unknown command ` +
+      `'${_target_command}'.`;
+    _msg_error(
+      _msg,
+      1);
+  }
 }
 
 module.exports = {
@@ -557,8 +569,12 @@ module.exports = {
     _db_path_auto_detect,
   _evm_chains_db_path_get:
     _evm_chains_db_path_get,
+  _evm_chain_info:
+    _evm_chain_info,
   _evm_chain_info_get:
     _evm_chain_info_get,
+  _evm_chain_info_set:
+    _evm_chain_info_set,
   _input_type_auto_detect:
     _input_type_auto_detect,
   _rpc_backend_get:
