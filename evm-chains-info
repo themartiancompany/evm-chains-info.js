@@ -335,6 +335,14 @@ function
     false;
   runtime_environment =
     "node";
+  if ( "h" in _argv ) {
+    _help_display =
+      true;
+  }
+  if ( "help" in _argv ) {
+    _help_display =
+      true;
+  }
   if ( _options.indexOf(
          "--help") > -1 ||
        _options.indexOf(
