@@ -507,7 +507,7 @@ function
     _networks_all,
     _target_chain,
     _db_paths) {
-  if ( target_command == "get" ) {
+  if ( _target_command == "get" ) {
     _evm_chains_info_get(
       _retrieval_mode,
       _input_type,
