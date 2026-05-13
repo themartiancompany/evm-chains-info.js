@@ -703,7 +703,6 @@ function
     _target_chain,
     _db_paths) {
   let
-    _infos,
     _result,
     _rpc;
   if ( _target_command == "get" ) {
@@ -719,6 +718,9 @@ function
           _api_key,
           _db_paths);
     if ( _output_type == "rpc" ) {
+      const
+        _infos =
+          [];
       for ( _result of _results ) {
         for ( _rpc of _result) {
           _infos.push(
