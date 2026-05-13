@@ -60,8 +60,6 @@
   "devDependencies": {
     "crash-js-webpack":
       "^0.0.3",
-    "flatted":
-      "3.4.1",
     "eslint":
       "^10.0.3",
     "globals":
