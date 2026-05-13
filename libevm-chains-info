@@ -87,6 +87,12 @@ _msg_error =
      no-global-assign */
 _path_join =
   _libcrash_module._path_join;
+/* global
+     _range */
+/* eslint-disable-next-line
+     no-global-assign */
+_range =
+  _libcrash_module._range;
 
 const
   _ethereum_data_module =
@@ -696,9 +702,12 @@ function
     _networks_all,
     _target_chain,
     _db_paths) {
+  let
+    _result,
+    _rpc;
   if ( _target_command == "get" ) {
     const
-      _info =
+      _results =
         _evm_chains_info_get(
           _target_chain,
           _retrieval_mode,
@@ -708,8 +717,14 @@ function
           _networks_all,
           _api_key,
           _db_paths);
-    console.log(
-      _info);
+    if ( _output_type == "rpc" ) {
+      for ( _result of _results ) {
+        for ( _rpc of _result) {
+          console.log(
+            _rpc);
+	}
+      }
+    }
   }
   else if ( _target_command == "set" ) {
     _evm_chains_info_set(
