@@ -115,7 +115,7 @@ function
     _db_name =
       "chains.json";
   }
-  else if ( _format == "unified" ) {
+  else if ( _format == "split" ) {
     _db_name =
       `${_chain_id}.json`;
   }
@@ -126,9 +126,10 @@ function
          ".config",
          "evm-chains",
          _db_name]);
-    _db_exists =
-      _file_exists(
-        _db_path);
+    const
+      _db_exists =
+        _file_exists(
+          _db_path);
     if ( _db_exists == false ) {
       _user =
         false;
@@ -459,6 +460,7 @@ function
     _db_paths) {
   let
     _db,
+    _db_path,
     _msg,
     _networks_total;
   _networks_total =
@@ -501,7 +503,7 @@ function
         console.log(
           _result);
         if ( _selection_method != "all" ) {
-          break
+          break;
         }
       }
     }
@@ -541,6 +543,7 @@ function
     _db_paths) {
   if ( _target_command == "get" ) {
     _evm_chains_info_get(
+      _target_chain,
       _retrieval_mode,
       _input_type,
       _db_paths);
