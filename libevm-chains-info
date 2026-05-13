@@ -457,6 +457,7 @@ function
   _evm_chains_info_get(
     _retrieval_mode,
     _input_type,
+    _selection_method,
     _db_paths) {
   let
     _db,
@@ -546,6 +547,7 @@ function
       _target_chain,
       _retrieval_mode,
       _input_type,
+      _selection_method,
       _db_paths);
   }
 }
