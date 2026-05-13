@@ -34,18 +34,38 @@ const
       "crash-js");
 /* global
      _homedir_get */
+/* eslint-disable-next-line
+     no-global-assign */
 _homedir_get =
   _libcrash_module._homedir_get;
 /* global
      _file_exists */
+/* eslint-disable-next-line
+     no-global-assign */
 _file_exists =
   _libcrash_module._file_exists;
 /* global
      _json_read */
+/* eslint-disable-next-line
+     no-global-assign */
 _json_read =
   _libcrash_module._json_read;
 /* global
+     _msg_info */
+/* eslint-disable-next-line
+     no-global-assign */
+_msg_info =
+  _libcrash_module._msg_info;
+/* global
+     _msg_error */
+/* eslint-disable-next-line
+     no-global-assign */
+_msg_error =
+  _libcrash_module._msg_error;
+/* global
      _path_join */
+/* eslint-disable-next-line
+     no-global-assign */
 _path_join =
   _libcrash_module._path_join;
 
@@ -55,6 +75,8 @@ const
       "ethereum-data");
 /* global
      _data_get */
+/* eslint-disable-next-line
+     no-global-assign */
 const
   _data_get =
     _ethereum_data_module._data_get;
