@@ -213,12 +213,12 @@ function
     _network_chain_id,
     _selection_method,
     _db_path) {
-  let
-    _chain_id,
-    _chain_info;
   if ( _network_chain_id == undefined ) {
+    const
+      _msg =
+       "Network's ChainID not specified.";
     _msg_error(
-      "Network's ChainID not specified.",
+      _msg,
       1);
   }
   if ( _selection_method == undefined ) {
@@ -230,13 +230,15 @@ function
       _evm_chains_db_path_get(
         false);
   }
-  _chain_id =
-    Number(
-      _network_chain_id);
-  _chain_info =
-    _evm_chain_info_get(
-      _chain_id,
-      _db_path);
+  const
+    _chain_id =
+      Number(
+        _network_chain_id);
+  const
+    _chain_info =
+      _evm_chain_info_get(
+        _chain_id,
+        _db_path);
   if ( _selection_method == "kirsh" ) {
     return _chain_info["rpc"][0];
   }
@@ -320,6 +322,10 @@ function
       "chainId";
     _filter_key =
       _target_chain;
+    _msg =
+      `Filter key: ${_filter_key}`;
+    _msg_info(
+      _msg);
   }
   else if ( _input_type == "testnet" ) {
     _msg =
@@ -485,13 +491,14 @@ function
       _db_path_check(
         _db_path);
       if ( _input_type != "amount" ) {
-        _db_get(
-	  _db_path,
-          _input_type,
-          _output_type,
-          _selection_method,
-          _api_key,
-          _target_chain);
+        _results =
+          _db_get(
+	    _db_path,
+            _input_type,
+            _output_type,
+            _selection_method,
+            _api_key,
+            _target_chain);
       }
       else if ( _input_type == "amount" ) {
         _db =
