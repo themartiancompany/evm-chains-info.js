@@ -419,6 +419,7 @@ function
     _target_chain) {
   let
     _db,
+    _entry,
     _filter,
     _filter_key,
     _filter_output_type,
@@ -687,7 +688,7 @@ function
             _networks_all,
             _target_chain);
         if ( _selection_method == "kirsh" ) {
-          break
+          break;
 	}
       }
       else if ( _input_type == "amount" ) {
@@ -752,6 +753,8 @@ function
   _evm_chains_info_set(
     _input_type) {
   if ( _input_type == "id" ) {
+  /* eslint-disable-next-line
+       no-useless-assignment */
     const
       _msg =
         `Setting value for type '${_input_type}'`.
