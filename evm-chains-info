@@ -521,6 +521,16 @@ function
   }
 }
 
+function
+  _evm_chains_info_cmdline(
+    _app_opts) {
+  const
+    _results =
+  _evm_chains_info.apply(
+    null,
+    app_opts);
+}
+
 _global_variables();
 if ( _cmdline_check(
        "evm-chains-info.js") == true ) {
@@ -542,6 +552,5 @@ app_opts = [
   target_chain,
   db_paths
 ];
-_evm_chains_info.apply(
-  null,
+_evm_chains_info_cmdline(
   app_opts);
