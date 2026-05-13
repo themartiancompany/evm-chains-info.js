@@ -703,6 +703,7 @@ function
     _target_chain,
     _db_paths) {
   let
+    _infos,
     _result,
     _rpc;
   if ( _target_command == "get" ) {
@@ -720,10 +721,11 @@ function
     if ( _output_type == "rpc" ) {
       for ( _result of _results ) {
         for ( _rpc of _result) {
-          console.log(
+          _infos.push(
             _rpc);
-	}
+        }
       }
+      return _infos;
     }
   }
   else if ( _target_command == "set" ) {
