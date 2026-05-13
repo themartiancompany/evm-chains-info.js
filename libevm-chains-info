@@ -634,15 +634,24 @@ function
           _msg,
           0);
       }
+      const
+        _db_new =
+          [];
       for ( _entry of _db ) {
         if ( _entry['chainId'] == _target_chain ) {
-          // console.log(
-          //   _entry);
+          _db_new.push(
+            _entry);
           if ( _selection_method != "all" ) {
             break;
           }
 	}
       }
+      _db =
+        _db_new;
+      _msg =
+        `Found '${_networks_total}' networks.`;
+      _msg_info(
+        _msg);
     }
     else if ( _input_type == "amount" ) {
       _msg =
