@@ -363,6 +363,8 @@ function
     _type_primary,
     _type_fallback,
     _msg;
+  /* global
+       user_level */
   if ( user_level == "y" ) {
     _type_primary =
       "user";
