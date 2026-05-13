@@ -85,7 +85,9 @@ Be aware the mirror could go offline any time as Github and more
 in general all HTTP resources are inherently unstable and censorable.
 
 The package has also been published
-on the NPM Registry as `evm-chains-info`
+on the NPM Registry as
+[`evm-chains-info`](
+  https://www.npmjs.com/package/evm-chain-info)
 and so it can be installed from there by typing
 
 ```bash
