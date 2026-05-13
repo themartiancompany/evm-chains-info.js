@@ -48,6 +48,10 @@ It is written and depends on the
   https://github.com/themartiancompany/crash-js)
 library.
 
+The GNU Bash implementation is at
+[`themartiancompany/evm-chains-info`](
+  https://github.com/themartiancompany/evm-chains-info).
+
 ## Installation
 
 The program in this source repo
@@ -58,7 +62,7 @@ make \
   install
 ```
 
-It has officially published on the
+It has officially been published on the
 the uncensorable
 [Ur](
   https://github.com/themartiancompany/ur)
@@ -76,24 +80,37 @@ ur \
   evm-chains-info
 ```
 
-A censorable HTTP Github mirror of the recipe published there,
-containing a full list of the software dependencies needed to run the
-tools is hosted on
-[evm-chains-info-ur](
-  https://github.com/themartiancompany/encoding-tools-ur).
-Be aware the mirror could go offline any time as Github and more
-in general all HTTP resources are inherently unstable and censorable.
+A censorable HTTP Github mirror (
+[`gur`](
+  https://github.com/themartiancompany/gur)
+of the
+[universal recipe](
+  https://github.com/themartiancompany/ur/blob/master/docs/UniversalRecipes.md)
+published there is hosted on
+[themartiancompany/evm-chains-info-ur](
+  https://github.com/themartiancompany/evm-chains-info-ur).
+Be aware it could go offline any time.
 
 The package has also been published
 on the NPM Registry as
-[`evm-chains-info`](
-  https://www.npmjs.com/package/evm-chain-info)
-and so it can be installed from there by typing
+[NPM Registry](
+  https://www.npmjs.com/package/evm-chains-info)
+as `evm-chains-info` and so it can be installed
+from there by typing
 
 ```bash
 npm \
   install \
     "evm-chains-info"
+```
+
+# Documentation
+
+The manual can be consulted with
+
+```bash
+man \
+  evm-chains-info
 ```
 
 ## License
