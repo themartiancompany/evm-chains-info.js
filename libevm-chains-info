@@ -791,9 +791,9 @@ function
           _infos.push(
             _explorer[
               "url"]);
-	}
-        if ( _selection_method == "kirsh" ) {
-          break;
+          if ( _selection_method == "kirsh" ) {
+            break;
+          }
         }
       }
       return _infos;
