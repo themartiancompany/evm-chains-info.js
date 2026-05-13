@@ -715,9 +715,13 @@ function
     _target_chain,
     _db_paths) {
   let
+    _explorer,
     _result,
     _rpc;
   if ( _target_command == "get" ) {
+    const
+      _infos =
+        [];
     const
       _results =
         _evm_chains_info_get(
@@ -730,16 +734,32 @@ function
           _api_key,
           _db_paths);
     if ( _output_type == "rpc" ) {
-      const
-        _infos =
-          [];
       for ( _result of _results ) {
         for ( _rpc of _result) {
           _infos.push(
             _rpc);
           if ( _selection_method == "kirsh" ) {
             break;
-	  }
+          }
+        }
+      }
+      return _infos;
+    }
+    else if ( _output_type == "name" ) {
+      return _results;
+    }
+    else if ( _output_type == "id" ) {
+      return _results;
+    }
+    else if ( _output_type == "explorers" ) {
+      for ( _result of _results ) {
+        for ( _explorer of _result ) {
+          _infos.push(
+            _explorer[
+              "url"]);
+	}
+        if ( _selection_method == "kirsh" ) {
+          break;
         }
       }
       return _infos;
