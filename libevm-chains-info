@@ -555,9 +555,10 @@ function
       _input_type);
   }
   else {
-    _msg =
-      `Unknown command ` +
-      `'${_target_command}'.`;
+    const
+      _msg =
+        `Unknown command ` +
+        `'${_target_command}'.`;
     _msg_error(
       _msg,
       1);
