@@ -89,7 +89,7 @@ function
         [_homedir_get(),
          ".config",
          "evm-chains",
-         _db_name)
+         _db_name]);
     _db_exists =
       _file_exists(
         _db_path);
