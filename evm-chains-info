@@ -353,6 +353,7 @@ function
   if ( _help_display ) {
     quiet =
       "n";
+    _overrides_set();
     _usage(
       0);
   }
