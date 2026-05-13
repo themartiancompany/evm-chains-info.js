@@ -125,11 +125,6 @@ function
   call_date =
     "";
   /* global
-       argument_required:
-         writable */
-  // argument_required =
-  //   "";
-  /* global
        target_command:
          writable */
   target_command =
