@@ -221,6 +221,7 @@ function
   let
     _chain_info,
     _data,
+    _db_type,
     _msg;
   if ( typeof(
          _db_types) == "undefined" ||
@@ -291,7 +292,7 @@ function
         _msg);
       console.log(
         _data);
-      for ( _chain_info of _db) {
+      for ( _chain_info of _data) {
         if ( _chain_info["chainId"] == _chain_id ) {
           return _chain_info;
         }
@@ -674,7 +675,7 @@ function
     _msg =
       `Fallback database ` +
       `'${_db_fallback_split}' ` +
-      `not info.`;
+      `does not exist.`;
     _msg_error(
       _msg,
       0);

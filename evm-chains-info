@@ -323,8 +323,15 @@ function
     _help_display,
     _msg;
   const
+    _argv_args = {
+      "booleans": [
+        "verbose"
+      ]
+    };
+  const
     _argv =
-      _argv_get();
+      _argv_get(
+        _argv_args);
   const
     _options =
       _argv[
