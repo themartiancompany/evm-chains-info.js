@@ -311,8 +311,11 @@ function
     _db_path,
     _user_level,
     _db_types) {
+  let
+    _msg;
   if ( typeof(
-         _network_chain_id) == "undefined" ) {
+         _network_chain_id) == "undefined" ||
+       _network_chain_id == "" ) {
     const
       _msg =
        "Network's ChainID not specified.";
@@ -321,12 +324,14 @@ function
       1);
   }
   if ( typeof(
-         _selection_method) == "undefined" ) {
+         _selection_method) == "undefined" ||
+       _selection_method == "" ) {
     _selection_method =
       "kirsh";
   }
   if ( typeof(
-         _db_path) == "undefined" ) {
+         _db_path) == "undefined" ||
+       _db_path == "" ) {
     _db_path =
       _evm_chains_db_path_get(
         "n");
@@ -354,11 +359,15 @@ function
         _user_level,
         _db_types);
   if ( _selection_method == "kirsh" ) {
-    return _chain_info["rpc"][0];
+    return _chain_info[
+             "rpc"][
+               0];
   }
   else {
+    _msg =
+      "Unknown selection method.";
     _msg_error(
-      "Unknown selection method.",
+      _msg,
       1);
   }
 }
