@@ -133,7 +133,7 @@ build-man:
 	sed \
 	  "s/insert.version.here/${_tag}/" \
 	  -i \
-	  "build/man/$(_PROJECT).1.rst"; \
+	  "build/man/variables.1.rst"; \
 	rst2man \
 	  "build/man/$(_PROJECT).1.rst" \
 	  "build/man/$(_PROJECT).1"; \
