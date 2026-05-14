@@ -237,7 +237,7 @@ function
   if ( typeof(
          _user_level) == "undefined" ) {
     _user_level =
-      false;
+      "n";
   }
   if ( typeof(
          _format) == "undefined" ) {
