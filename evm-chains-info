@@ -325,6 +325,7 @@ function
   const
     _argv_args = {
       "booleans": [
+        "v",
         "verbose"
       ]
     };
@@ -473,13 +474,11 @@ function
   }
   if ( "v" in _argv ) {
     verbose =
-      _argv[
-        "v"];
+      true;
   }
   if ( "verbose" in _argv ) {
     verbose =
-      _argv[
-        "verbose"];
+      true;
   }
   if ( verbose ) {
     quiet =

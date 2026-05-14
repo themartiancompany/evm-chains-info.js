@@ -194,6 +194,9 @@ function
     const
       _lib =
        _lib_get();
+    _msg =
+      `Found system libraries directory ` +
+      `'${_lib}'.`;
     _db_path =
       _path_join(
         [ _lib,
