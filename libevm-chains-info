@@ -679,7 +679,7 @@ function
       _msg,
       0);
   }
-  if ( db_path.length == 0 ) {
+  if ( db_paths.length == 0 ) {
     _msg =
       "Found no databases!";
     _msg_info(
