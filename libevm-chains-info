@@ -625,6 +625,12 @@ function
          _db) ) {
     db_paths.push(
       _db);
+    _msg =
+      `Found database ` +
+      `'${_db}', ` +
+      `adding.`;
+    _msg_info(
+      _msg);
   }
   else {
     _msg =
@@ -638,6 +644,12 @@ function
            _db_fallback_split) ) {
     db_paths.push(
       _db_fallback_split);
+    _msg =
+      `Found database ` +
+      `'${_db_fallback_split}', ` +
+      `adding.`;
+    _msg_info(
+      _msg);
   }
   else {
     _msg =
@@ -651,6 +663,12 @@ function
          _db_fallback) ) {
     db_paths.push(
       _db_fallback);
+    _msg =
+      `Found database ` +
+      `'${_db_fallback}', ` +
+      `adding.`;
+    _msg_info(
+      _msg);
   }
   else {
     _msg =
