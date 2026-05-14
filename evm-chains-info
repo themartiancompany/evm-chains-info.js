@@ -100,6 +100,11 @@ const
   _db_paths_auto_detect =
     _libevm_chains_info._db_paths_auto_detect;
 /* global
+     _db_types_auto_detect */
+const
+  _db_types_auto_detect =
+    _libevm_chains_info._db_types_auto_detect;
+/* global
      _input_type_auto_detect */
 const
   _input_type_auto_detect =
@@ -147,6 +152,11 @@ function
          writable */
   retrieval_mode =
     "";
+  /* global
+       db_types:
+         writable */
+  db_types =
+    [];
   /* global
        user_level:
          writable */
@@ -229,6 +239,7 @@ function
   }
   _db_paths_auto_detect(
     target_chain);
+  _db_types_auto_detect();
 }
 
 function
@@ -345,11 +356,11 @@ function
     false;
   runtime_environment =
     "node";
-  if ( "h" in _argv ) {
+  if ( _argv["h"] ) {
     _help_display =
       true;
   }
-  if ( "help" in _argv ) {
+  if ( _argv["help"] ) {
     _help_display =
       true;
   }
@@ -446,7 +457,17 @@ function
   if ( "db-path" in _argv ) {
     db_paths.push(
       _argv[
-        "user-level"]);
+        "db-paths"]);
+  }
+  if ( "t" in _argv ) {
+    db_types.push(
+      _argv[
+        "t"]);
+  }
+  if ( "db-types" in _argv ) {
+    db_types.push(
+      _argv[
+        "db-types"]);
   }
   if ( "s" in _argv ) {
     selection_method =
@@ -578,6 +599,7 @@ app_opts = [
   input_type,
   output_type,
   retrieval_mode,
+  db_types,
   selection_method,
   api_key,
   networks_all,

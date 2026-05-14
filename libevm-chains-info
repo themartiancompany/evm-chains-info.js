@@ -556,6 +556,19 @@ function
 }
 
 function
+  _db_types_auto_detect(
+    _chain_id) {
+  if ( db_types.length == 0 ) {
+    db_types.push(
+      "node");
+  }
+  if ( db_paths.length > 0 ) {
+    db_types.push(
+      "system");
+  }
+}
+
+function
   _db_paths_auto_detect(
     _chain_id) {
   let
@@ -813,6 +826,7 @@ function
     _input_type,
     _output_type,
     _retrieval_mode,
+    _db_types,
     _selection_method,
     _api_key,
     _networks_all,
@@ -889,6 +903,8 @@ module.exports = {
     _data_get,
   _db_paths_auto_detect:
     _db_paths_auto_detect,
+  _db_types_auto_detect:
+    _db_types_auto_detect,
   _evm_chains_db_path_get:
     _evm_chains_db_path_get,
   _evm_chains_info:
