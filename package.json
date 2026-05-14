@@ -87,9 +87,12 @@
     "commonjs",
   "main":
     "libevm-chains-info",
-  "bin":
-    { "evm-chains-info.js":
-        "evm-chains-info" },
+  "bin": {
+    "evm-chain-info":
+        "evm-chains-info",
+      "evm-chains-info.js":
+        "evm-chains-info"
+  },
   "scripts": {
     "build-fs-worker":
       "npx webpack --mode 'production' --config 'fs-worker.webpack.config.cjs' --stats-error-details",
