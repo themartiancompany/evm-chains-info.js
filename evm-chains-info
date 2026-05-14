@@ -325,6 +325,8 @@ function
   const
     _argv_args = {
       "booleans": [
+        "h",
+        "help",
         "v",
         "verbose"
       ]
