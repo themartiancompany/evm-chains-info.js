@@ -674,10 +674,16 @@ function
     _msg =
       `Fallback database ` +
       `'${_db_fallback_split}' ` +
-      `not found too!`;
+      `not info.`;
     _msg_error(
       _msg,
-      1);
+      0);
+  }
+  if ( db_path.length == 0 ) {
+    _msg =
+      "Found no databases!";
+    _msg_info(
+      _msg);
   }
 }
 
