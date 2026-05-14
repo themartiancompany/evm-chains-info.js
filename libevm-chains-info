@@ -329,7 +329,7 @@ function
          _db_path) == "undefined" ) {
     _db_path =
       _evm_chains_db_path_get(
-        false);
+        "n");
   }
   if ( typeof(
          _db_types) == "undefined" ) {
@@ -340,7 +340,7 @@ function
   }
   if ( _user_level == undefined ) {
     _user_level =
-      true;
+      "y";
   }
   const
     _chain_id =
@@ -378,7 +378,7 @@ function _rpc_backends_get(
   if ( _db_path == undefined ) {
     _db_path =
       _evm_chains_db_path_get(
-        false);
+        "n");
   }
   const
     _rpcs =
@@ -555,15 +555,15 @@ function
     _msg;
   if ( user_level == "y" ) {
     _type_primary =
-      true;
+      "y";
     _type_fallback =
-      false;
+      "n";
   }
   else if ( user_level == "n" ) {
     _type_primary =
-      true;
+      "n";
     _type_fallback =
-      false;
+      "y";
   }
   const
     _db =
