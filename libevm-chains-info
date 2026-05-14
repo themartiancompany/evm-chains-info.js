@@ -193,7 +193,7 @@ function
   else if ( _user == "n" ) {
     const
       _lib =
-        _lib_get();
+        await _lib_get();
     _db_path =
       _path_join(
         [ _lib,
