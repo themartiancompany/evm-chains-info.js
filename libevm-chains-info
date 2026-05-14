@@ -227,6 +227,14 @@ function
     _data,
     _msg;
   if ( typeof(
+         _db_types) == "undefined" ||
+         _db_types == [] ) {
+    _db_types = [
+      "node",
+      "system"
+    ];
+  }
+  if ( typeof(
          _user_level) == "undefined" ) {
     _user_level =
       false;
@@ -244,14 +252,38 @@ function
         _chain_id,
         _format);
   }
-  const
-    _db_exists =
-      _file_exists(
-        _db_path);
-  if ( _db_exists == false ) {
-    if ( typeof window === 'undefined' &&
-         ( typeof global !== 'undefined' && global.global === global ) &&
-         typeof __webpack_require__ !== 'function' ) {
+  for ( _db_type of _db_types ) {
+    if ( _db_type == "system" ) {
+      const
+        _db_exists =
+          _file_exists(
+            _db_path);
+      const 
+        _db =
+          _json_read(
+            _db_path);
+      _msg =
+        `Displaying data for ` +
+        `chain '${_chain_id}' `+
+        `of type '${_db_types}'.`;
+      _msg_info(
+        _msg);
+      for ( _chain_info of _db) {
+        if ( _chain_info["chainId"] == _chain_id ) {
+          return _chain_info;
+        }
+      }
+      _msg =
+        `Network '${_chain_id}' not found.`;
+      _msg_error(
+        _msg,
+        1);
+    }
+    else if ( _db_type == "node" ) {
+      _msg =
+        `Getting data from 'ethereum-data' module.`;
+      _msg_info(
+        _msg);
       _data =
         _data_get(
           _chain_id);
@@ -263,34 +295,13 @@ function
         _msg);
       console.log(
         _data);
-    }
-    // _msg_error(
-    //   "Database file does not exists.",
-    //   1);
-  }
-  const 
-    _db =
-      _json_read(
-        _db_path);
-    // _data =
-    //   _data_get(
-    //     _chain_id);
-    _msg =
-      `Displaying data for ` +
-      `chain '${_chain_id}' `+
-      `of type '${_db_types}'.`;
-    _msg_info(
-      _msg);
-    // console.log(
-    //   _db);
-  for ( _chain_info of _db) {
-    if ( _chain_info["chainId"] == _chain_id ) {
-      return _chain_info;
+      for ( _chain_info of _db) {
+        if ( _chain_info["chainId"] == _chain_id ) {
+          return _chain_info;
+        }
+      }
     }
   }
-  _msg_error(
-    `Network '${_chain_id}' not found.`,
-    1);
 }
 
 function
