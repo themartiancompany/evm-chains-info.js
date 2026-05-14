@@ -158,10 +158,6 @@ function
     const
       _home_dir =
         _homedir_get();
-    _msg =
-      `Home directory: '${_home_dir}'`;
-    _msg_info(
-      _msg);
     _db_path =
       _path_join(
         [ _home_dir,
