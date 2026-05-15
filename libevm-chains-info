@@ -253,7 +253,27 @@ function
         _format);
   }
   for ( _db_type of _db_types ) {
-    if ( _db_type == "system" ) {
+    if ( _db_type == "node" ) {
+      _msg =
+        `Getting data from 'ethereum-data' module.`;
+      _msg_info(
+        _msg);
+      _data =
+        _data_get(
+          _chain_id);
+      _msg =
+        `Displaying data for ` +
+        `chain '${_chain_id}' `+
+        `of type '${_db_types}'.`;
+      _msg_info(
+        _msg);
+      for ( _chain_info of _data) {
+        if ( _chain_info["chainId"] == _chain_id ) {
+          return _chain_info;
+        }
+      }
+    }
+    else if ( _db_type == "system" ) {
       const
         _db_exists =
           _file_exists(
@@ -278,28 +298,6 @@ function
       _msg_error(
         _msg,
         1);
-    }
-    else if ( _db_type == "node" ) {
-      _msg =
-        `Getting data from 'ethereum-data' module.`;
-      _msg_info(
-        _msg);
-      _data =
-        _data_get(
-          _chain_id);
-      _msg =
-        `Displaying data for ` +
-        `chain '${_chain_id}' `+
-        `of type '${_db_types}'.`;
-      _msg_info(
-        _msg);
-      console.log(
-        _data);
-      for ( _chain_info of _data) {
-        if ( _chain_info["chainId"] == _chain_id ) {
-          return _chain_info;
-        }
-      }
     }
   }
 }
@@ -708,6 +706,7 @@ function
   _evm_chains_info_get(
     _target_chain,
     _retrieval_mode,
+    _db_types,
     _input_type,
     _output_type,
     _selection_method,
@@ -717,6 +716,7 @@ function
   let
     _db,
     _db_path,
+    _db_type,
     _entry,
     _msg,
     _networks_total,
@@ -724,79 +724,100 @@ function
   _networks_total =
     0;
   if ( _retrieval_mode == "offline" ) {
-    _msg =
-      `Getting data from databases ` +
-      `'${_db_paths}'`;
-    _msg_info(
-      _msg);
-    for ( _db_path of _db_paths ) {
-      _msg =
-        `Looking in '${_db_path}'.`;
-      _msg_info(
-        _msg);
-      _db_path_check(
-        _db_path);
-      if ( _input_type != "amount" ) {
+    for ( _db_type of _db_types ) {
+      if ( _db_type == "node" ) {
         _db =
-          _db_get(
-            _db_path,
-            _input_type,
-            _output_type,
-            _selection_method,
-            _api_key,
-            _networks_all,
-            _target_chain);
-        if ( _selection_method == "kirsh" ) {
-          break;
-	}
-      }
-      else if ( _input_type == "amount" ) {
-        _db =
-          _json_read(
-            _db_path);
-        _networks_total =
-          _db.length;
-      }
-    }
-    if ( _input_type != "amount" ) {
-      _networks_total =
-        _db.length;
-      if ( _db.length == 0 ) {
-        _msg =
-          `No results found for network ` +
-          `'${_target_chain}'.`;
-        _msg_error(
-          _msg,
-          0);
-      }
-      const
-        _results =
           [];
-      for ( _entry of _db ) {
-        if ( _entry['chainId'] == _target_chain ) {
-          _results.push(
-            _entry[
-              _output_type]);
-          if ( _selection_method != "all" ) {
-            break;
+        _results =
+          _data_get(
+            _target_chain);
+        for ( _chain_info of _results) {
+          if ( _chain_info["chainId"] == _target_chain ) {
+            _db.push(
+              _chain_info);
+            if ( _selection_method == "kirsh" ) {
+              break;
+            }
           }
         }
       }
-      _db =
-        _results;
-      _msg =
-        `Found '${_networks_total}' ` +
-        `networks in database '${_db_path}'.`;
-      _msg_info(
-        _msg);
+      else if ( _db_type == "node" ) {
+        _msg =
+          `Getting data from databases ` +
+          `'${_db_paths}'`;
+        _msg_info(
+          _msg);
+        for ( _db_path of _db_paths ) {
+          _msg =
+            `Looking in '${_db_path}'.`;
+          _msg_info(
+            _msg);
+          _db_path_check(
+            _db_path);
+          if ( _input_type != "amount" ) {
+            _db =
+              _db_get(
+                _db_path,
+                _input_type,
+                _output_type,
+                _selection_method,
+                _api_key,
+                _networks_all,
+                _target_chain);
+          }
+          else if ( _input_type == "amount" ) {
+            _db =
+              _json_read(
+                _db_path);
+            _networks_total =
+              _db.length;
+            if ( _selection_method == "kirsh" ) {
+              break;
+            }
+          }
+        }
+        if ( _input_type != "amount" ) {
+          _networks_total =
+            _db.length;
+          if ( _db.length == 0 ) {
+            _msg =
+              `No results found for network ` +
+              `'${_target_chain}'.`;
+            _msg_error(
+              _msg,
+              0);
+          }
+        }
+        else if ( _input_type == "amount" ) {
+          _msg =
+            `Found '${_networks_total}' networks.`;
+          _msg_info(
+            _msg);
+          return _networks_total;
+        }
+      }
     }
-    else if ( _input_type == "amount" ) {
-      _msg =
-        `Found '${_networks_total}' networks.`;
-      _msg_info(
-        _msg);
-      return _networks_total;
+    _results =
+      [];
+    for ( _entry of _db ) {
+      if ( _entry['chainId'] == _target_chain ) {
+        _results.push(
+          _entry[
+            _output_type]);
+        if ( _selection_method != "all" ) {
+          break;
+        }
+      }
     }
+    _db =
+      _results;
+    _networks_total =
+      _db.length;
+    _msg =
+      `Found '${_networks_total}' ` +
+      `networks in database '${_db_path}'.`;
+    _msg_info(
+      _msg);
   }
   else if ( _retrieval_mode == "online" ) {
     _msg =
@@ -845,6 +866,7 @@ function
         _evm_chains_info_get(
           _target_chain,
           _retrieval_mode,
+          _db_types,
           _input_type,
           _output_type,
           _selection_method,
