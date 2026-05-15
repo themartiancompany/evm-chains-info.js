@@ -743,7 +743,7 @@ function
           }
         }
       }
-      else if ( _db_type == "node" ) {
+      else if ( _db_type == "system" ) {
         _msg =
           `Getting data from databases ` +
           `'${_db_paths}'`;
