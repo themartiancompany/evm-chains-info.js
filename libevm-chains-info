@@ -35,6 +35,8 @@
 
 /* global 
      db_paths */
+/* global 
+     db_types */
 /* global
      input_type:
        writable */
@@ -731,10 +733,10 @@ function
         _results =
           _data_get(
             _target_chain);
-        for ( _chain_info of _results) {
-          if ( _chain_info["chainId"] == _target_chain ) {
+        for ( _entry of _results) {
+          if ( _entry["chainId"] == _target_chain ) {
             _db.push(
-              _chain_info);
+              _entry);
             if ( _selection_method == "kirsh" ) {
               break;
             }
