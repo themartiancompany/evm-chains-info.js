@@ -2,7 +2,7 @@
   "name":
     "evm-chains-info",
   "version":
-    "0.0.15",
+    "0.0.16",
   "description":
     "Returns information about Ethereum Virtual Machine (EVM) blockchains.",
   "funding": {
@@ -79,7 +79,7 @@
     "crash-js":
       "^0.1.101",
     "ethereum-data":
-      "^0.0.3",
+      "^0.0.4",
     "yargs":
       "18.0.0"
   },
