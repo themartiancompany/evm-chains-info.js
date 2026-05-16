@@ -123,8 +123,12 @@ build-man:
 	  -p \
 	  "build/man"; \
 	cp \
+	  -v \
 	  "man/variables.rst" \
 	  "build/man"; \
+	ls \
+	  -lsh \
+	  "build"/man"; \
 	cat \
 	  "man/$(_PROJECT_NPM).1.rst" | \
 	  sed \
@@ -134,13 +138,16 @@ build-man:
 	  "s/insert.version.here/$${_tag}/" \
 	  -i \
 	  "build/man/variables.rst"; \
+	cd \
+	  "build/man"; \
+	ls -lsh; \
 	rst2man \
 	  "build/man/$(_PROJECT).1.rst" \
 	  "build/man/$(_PROJECT).1"; \
 	rm \
-	  "build/man/$(_PROJECT).1.rst"; \
-	rm \
-	  "build/man/variables.rst"
+	  "build/man/$(_PROJECT).1.rst";
+	# rm \
+	#   "build/man/variables.rst"
 
 build-npm:
 
