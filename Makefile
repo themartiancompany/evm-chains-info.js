@@ -138,9 +138,6 @@ build-man:
 	  "s/insert.version.here/$${_tag}/" \
 	  -i \
 	  "build/man/variables.rst"; \
-	cd \
-	  "build/man"; \
-	ls -lsh; \
 	rst2man \
 	  "build/man/$(_PROJECT).1.rst" \
 	  "build/man/$(_PROJECT).1"; \
