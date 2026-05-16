@@ -128,7 +128,7 @@ build-man:
 	  "build/man"; \
 	ls \
 	  -lsh \
-	  "build"/man"; \
+	  "build/man"; \
 	cat \
 	  "man/$(_PROJECT_NPM).1.rst" | \
 	  sed \
