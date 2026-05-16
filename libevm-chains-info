@@ -230,24 +230,28 @@ function
     _msg;
   if ( typeof(
          _db_types) == "undefined" ||
-         _db_types == [] ) {
+         _db_types == [] ||
+         _db_types == "" ) {
     _db_types = [
       "node",
       "system"
     ];
   }
   if ( typeof(
-         _user_level) == "undefined" ) {
+         _user_level) == "undefined" ||
+       _user_level == "" ) {
     _user_level =
       "n";
   }
   if ( typeof(
-         _format) == "undefined" ) {
+         _format) == "undefined" ||
+       _format == "" ) {
     _format =
       "split";
   }
   if ( typeof(
-         _db_path) == "undefined" ) {
+         _db_path) == "undefined" ||
+       _db_path == "" ) {
     _db_path =
       _evm_chains_db_path_get(
         _user_level,
@@ -343,7 +347,9 @@ function
       "system"
     ];
   }
-  if ( _user_level == undefined ) {
+  if ( typeof(
+         _user_level) == "undefined" ||
+       _user_level == "" ) {
     _user_level =
       "y";
   }
