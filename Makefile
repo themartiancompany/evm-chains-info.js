@@ -111,14 +111,6 @@ build-man:
 	    --init \
 	      "man" || \
 	true; \
-	_tag="$$( \
-	  git \
-	    tag | \
-	    sort \
-	      -V | \
-              head \
-	        -n \
-	          1)"; \
 	mkdir \
 	  -p \
 	  "build/man"; \
@@ -134,6 +126,15 @@ build-man:
 	  sed \
 	    "s/$(_PROJECT_NPM)/$(_PROJECT)/g" > \
 	    "build/man/$(_PROJECT).1.rst"; \
+	_version="$$( \
+	  npm \
+	    view \
+	      "$${PWD}" \
+	      "version")"; \
+	sed \
+	  "s/insert.version.here/$${_version}/" \
+	  -i \
+	  "build/man/variables.rst"; \
 	sed \
 	  "s/insert.version.here/$${_tag}/" \
 	  -i \
