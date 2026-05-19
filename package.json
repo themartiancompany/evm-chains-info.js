@@ -2,7 +2,7 @@
   "name":
     "evm-chains-info",
   "version":
-    "0.0.20",
+    "0.0.21",
   "description":
     "Returns information about Ethereum Virtual Machine (EVM) blockchains.",
   "funding": {
@@ -103,10 +103,10 @@
       "npm run lint && npm run build-fs-worker && npm run build-lib && npm run build-bin",
     "lint":
       "npx eslint .",
-    "publish-pnm":
+    "publish-npm":
       "npm run build && npm publish --access public",
     "start":
-      "npx safely-serve --help # index.html --port 3000 --https --no-cache",
+      "npx safely-serve 'dist/evm-chains-info' --port 3000 --https --no-cache",
     "test":
       "echo \"Error: no test specified\" && exit 1"
   }
