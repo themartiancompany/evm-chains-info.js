@@ -137,9 +137,12 @@ build-npm:
 	  build-man
 	for _file in $(NPM_FILES); do \
 	  if [[ -d "$${_file}" ]]; then \
+	    mkdir \
+	     -p \
+	     "build/$${_file}"; \
 	    cp \
 	      -r \
-	      "$${_file}/* \
+	      "$${_file}/"* \
 	      "build/$${_file}"; \
 	  elif [[ -e "$${_file}" ]]; then \
 	    cp \
