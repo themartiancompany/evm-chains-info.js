@@ -56,6 +56,7 @@ NPM_FILES=\
   "README.md" \
   "COPYING" \
   "AUTHORS.rst" \
+  "dist"
   "evm-chains-info" \
   "eslint.config.mjs" \
   "fs-worker.webpack.config.cjs" \
@@ -92,10 +93,16 @@ install-scripts:
 
 	$(_INSTALL_DIR) \
 	  "$(LIB_DIR)"
-	for _file in $(NPM_FILES); do
-	  $(_INSTALL_FILE) \
-	    "$${_file}" \
-	    "$(LIB_DIR)/nodejs/$${_file}"; \
+	for _file in $(NPM_FILES); do \
+	  if [[ -d "$${_file}" ]]; then \
+	    cp \
+	      -r \
+	      "$${_file}" \
+	      "$(LIB_DIR)/nodejs"
+	  elif [[ -e "$${_file}" ]]; then \
+	    $(_INSTALL_FILE) \
+	      "$${_file}" \
+	      "$(LIB_DIR)/nodejs/$${_file}"; \
 	done
 	ln \
 	  -s \
