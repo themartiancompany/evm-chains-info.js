@@ -2,7 +2,7 @@
   "name":
     "evm-chains-info",
   "version":
-    "0.0.18",
+    "0.0.19",
   "description":
     "Returns information about Ethereum Virtual Machine (EVM) blockchains.",
   "funding": {
@@ -60,7 +60,7 @@
   },
   "devDependencies": {
     "crash-js-webpack":
-      "^0.0.6",
+      "^0.0.9",
     "flatted":
       "^3.2.9",
     "eslint":
@@ -78,7 +78,7 @@
   },
   "dependencies": {
     "crash-js":
-      "^0.1.101",
+      "^0.1.107",
     "ethereum-data":
       "^0.0.4",
     "yargs":
@@ -96,11 +96,11 @@
   },
   "scripts": {
     "build-fs-worker":
-      "npx webpack --mode 'production' --config 'fs-worker.webpack.config.cjs' --stats-error-details",
+      "npx webpack --mode 'production' --config 'fs-worker.webpack.config.cjs' --stats-error-details && cp 'fs-worker.js' 'dist' && cp 'fs-worker.js' 'dist/evm-chains-info'",
     "build-lib":
-      "npx webpack --mode 'production' --config 'libevm-chains-info.webpack.config.cjs' --stats-error-details",
+      "npx webpack --mode 'production' --config 'libevm-chains-info.webpack.config.cjs' --stats-error-details && mv 'libevm-chains-info.js' 'dist'",
     "build-bin":
-      "npx webpack --mode 'production' --config 'webpack.config.cjs' --stats-error-details",
+      "npx webpack --mode 'production' --config 'webpack.config.cjs' --stats-error-details && mv 'evm-chains-info.js' 'dist/evm-chains-info'",
     "build":
       "npm run lint && npm run build-fs-worker && npm run build-lib && npm run build-bin",
     "lint":
