@@ -56,7 +56,7 @@ NPM_FILES=\
   "README.md" \
   "COPYING" \
   "AUTHORS.rst" \
-  "dist"
+  "dist" \
   "evm-chains-info" \
   "eslint.config.mjs" \
   "fs-worker.webpack.config.cjs" \
