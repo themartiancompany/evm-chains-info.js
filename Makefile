@@ -98,7 +98,7 @@ install-scripts:
 	    cp \
 	      -r \
 	      "$${_file}" \
-	      "$(LIB_DIR)/nodejs"
+	      "$(LIB_DIR)/nodejs"; \
 	  elif [[ -e "$${_file}" ]]; then \
 	    $(_INSTALL_FILE) \
 	      "$${_file}" \
