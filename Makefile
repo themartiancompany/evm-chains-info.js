@@ -149,7 +149,8 @@ build-npm:
 	    $(_INSTALL_FILE) \
 	      "$${_file}" \
 	      "$(LIB_DIR)/nodejs/$${_file}"; \
-	done
+	  fi; \
+	done;
 	cd \
 	  "build"; \
 	_version="$$( \
