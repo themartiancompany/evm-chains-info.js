@@ -139,8 +139,8 @@ build-npm:
 	  if [[ -d "$${_file}" ]]; then \
 	    cp \
 	      -r \
-	      "$${_file}/"* \
-	      "build"/$${_file}; \
+	      "$${_file}/* \
+	      "build/$${_file}"; \
 	  elif [[ -e "$${_file}" ]]; then \
 	    cp \
 	      -r \
@@ -148,7 +148,7 @@ build-npm:
 	      "build"; \
 	    $(_INSTALL_FILE) \
 	      "$${_file}" \
-	      "$(LIB_DIR)/nodejs/$${_file}"; \
+	      "build/$${_file}"; \
 	  fi; \
 	done;
 	cd \
