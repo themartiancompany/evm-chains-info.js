@@ -196,6 +196,7 @@ install-scripts:
 	    $(_INSTALL_FILE) \
 	      "$${_file}" \
 	      "$(LIB_DIR)/nodejs/$${_file}"; \
+	  fi; \
 	done
 	ln \
 	  -s \
