@@ -94,9 +94,9 @@
   },
   "scripts": {
     "build-fs-worker":
-      "npx webpack --mode 'production' --config 'fs-worker.webpack.config.cjs' --stats-error-details && cp 'fs-worker.js' 'dist' && cp 'fs-worker.js' 'dist/evm-chains-info'",
+      "npx webpack --mode 'production' --config 'fs-worker.webpack.config.cjs' --stats-error-details && cp 'fs-worker.js' 'dist/evm-chains-info' && cp 'fs-worker.js' 'dist/evm-chains-info'",
     "build-lib":
-      "npx webpack --mode 'production' --config 'libevm-chains-info.webpack.config.cjs' --stats-error-details && mv 'libevm-chains-info.js' 'dist'",
+      "npx webpack --mode 'production' --config 'libevm-chains-info.webpack.config.cjs' --stats-error-details && mv 'libevm-chains-info.js' 'dist/libevm-chains-info'",
     "build-bin":
       "npx webpack --mode 'production' --config 'webpack.config.cjs' --stats-error-details && mv 'evm-chains-info.js' 'dist/evm-chains-info'",
     "build":
