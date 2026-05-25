@@ -76,11 +76,17 @@
   },
   "dependencies": {
     "crash-js":
-      "^0.1.107",
+      "^0.1.110",
     "ethereum-data":
       "^0.0.4",
+    "evm-wallet.js":
+      "^0.0.45",
     "yargs":
       "18.0.0"
+  },
+  "override": {
+    "evm-chains-info":
+      "^0.0.21"
   },
   "type":
     "commonjs",
