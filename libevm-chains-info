@@ -884,8 +884,17 @@ function
     if ( _output_type == "rpc" ) {
       for ( _result of _results ) {
         for ( _rpc of _result) {
-          _infos.push(
-            _rpc);
+          if ( _api_key == "y" ) {
+            _infos.push(
+              _rpc);
+          }
+          else if ( _api_key == "n" ) {
+            if ( ! string.includes(
+                     "API_KEY") ) {
+              _infos.push(
+                _rpc);
+	    }
+	  }
           if ( _selection_method == "kirsh" ) {
             break;
           }
