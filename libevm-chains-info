@@ -889,7 +889,7 @@ function
               _rpc);
           }
           else if ( _api_key == "n" ) {
-            if ( ! string.includes(
+            if ( ! _rpc.includes(
                      "API_KEY") ) {
               _infos.push(
                 _rpc);
