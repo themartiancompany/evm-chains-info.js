@@ -108,7 +108,7 @@ const
   _data_get =
     _ethereum_data_module._data_get;
 
-function
+async function
   _evm_chains_db_path_get(
     _user,
     _chain_id,
@@ -195,7 +195,7 @@ function
   else if ( _user == "n" ) {
     const
       _lib =
-       _lib_get();
+        await _lib_get();
     _msg =
       `Found system libraries directory ` +
       `'${_lib}'.`;
@@ -216,7 +216,7 @@ function
   return _db_path;
 }
  
-function
+async function
   _evm_chain_info_get(
     _chain_id,
     _db_path,
@@ -253,7 +253,7 @@ function
          _db_path) == "undefined" ||
        _db_path == "" ) {
     _db_path =
-      _evm_chains_db_path_get(
+      await _evm_chains_db_path_get(
         _user_level,
         _chain_id,
         _format);
@@ -308,7 +308,7 @@ function
   }
 }
 
-function
+async function
   _rpc_backend_get(
     _network_chain_id,
     _selection_method,
@@ -337,7 +337,7 @@ function
          _db_path) == "undefined" ||
        _db_path == "" ) {
     _db_path =
-      _evm_chains_db_path_get(
+      await _evm_chains_db_path_get(
         "n");
   }
   if ( typeof(
@@ -359,7 +359,7 @@ function
         _network_chain_id);
   const
     _chain_info =
-      _evm_chain_info_get(
+      await _evm_chain_info_get(
         _chain_id,
         _db_path,
         _user_level,
@@ -378,7 +378,7 @@ function
   }
 }
 
-function
+async function
   _rpc_backends_get(
     _networks_chain_ids,
     _selection_method,
@@ -393,7 +393,7 @@ function
   }
   if ( _db_path == undefined ) {
     _db_path =
-      _evm_chains_db_path_get(
+      await _evm_chains_db_path_get(
         "n");
   }
   const
@@ -406,7 +406,7 @@ function
       _db_path
     ];
     _rpc_backend =
-      _rpc_backend_get.apply(
+      await _rpc_backend_get.apply(
         null,
         _rpc_backend_get_opts);
     _rpcs.push(
@@ -592,7 +592,7 @@ function
   }
 }
  
-function
+async function
   _db_paths_auto_detect(
     _chain_id) {
   let
@@ -613,25 +613,25 @@ function
   }
   const
     _db =
-      _evm_chains_db_path_get(
+      await _evm_chains_db_path_get(
         _type_primary,
         "",
         "unified");
   const
     _db_split =
-      _evm_chains_db_path_get(
+      await _evm_chains_db_path_get(
         _type_primary,
         _chain_id,
         "split");
   const
     _db_fallback =
-      _evm_chains_db_path_get(
+      await _evm_chains_db_path_get(
         _type_fallback,
         "",
         "unified");
   const
     _db_fallback_split =
-      _evm_chains_db_path_get(
+      await _evm_chains_db_path_get(
         _type_fallback,
         _chain_id,
         "split");
