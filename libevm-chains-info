@@ -919,6 +919,62 @@ function
   }
 }
 
+async function
+  _rpc_check(
+    _rpc) {
+  const
+    _evm_wallet_module =
+      require(
+        "evm-wallet.js");
+  const
+    _block_number_get =
+      _evm_wallet_module._block_number_get;
+  const
+    _block_number_get_args = [
+      _rpc,
+      "",            // _api key
+      "",            // output file
+      "3",           // max retries
+      "10000",       // call timeout
+    ];
+  _block_number =
+    await _block_number_get.apply(
+       null,
+      _block_number_get_args);
+  console.log(
+    _block_number);
+}
+
+function
+  _chain_check(
+    _target_chain,
+    _retrieval_mode,
+    _db_types,
+    _input_type,
+    _api_key,
+    _db_paths) {
+  const
+    _results =
+      _evm_chains_info_get(
+        _target_chain,
+        _retrieval_mode,
+        _db_types,
+        _input_type,
+        "rpc",
+        "all",
+        "n", // all networks
+        _api_key,
+        _db_paths);
+  for ( _result of _results ) {
+    for ( _rpc of _result) {
+      _status =
+        _rpc_check(
+	  );
+    }
+  }
+
+}
+
 function
   _evm_chains_info(
     _target_command,
@@ -995,6 +1051,10 @@ function
   else if ( _target_command == "set" ) {
     _evm_chains_info_set(
       _input_type);
+  }
+  else if ( _target_command == "check" ) {
+    _chain_check(
+      _target_chain);
   }
   else {
     const
