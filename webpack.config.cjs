@@ -96,6 +96,14 @@ module.exports = {
   },
   resolve: {
     alias: {
+      "evm-contracts-tools":
+        _path.resolve(
+          __dirname,
+          'node_modules/evm-contract-tools/evm-contracts-tools'),
+      "evm-wallet.js":
+        _path.resolve(
+          __dirname,
+          'node_modules/evm-wallet.js/libevm-wallet'),
       "fs":
         _path.resolve(
           __dirname,
