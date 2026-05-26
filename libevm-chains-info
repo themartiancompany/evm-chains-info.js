@@ -974,7 +974,8 @@ async function
     _target_chain,
     _rpc) {
   let
-    _block_number;
+    _block_number,
+    _msg;
   const
     _evm_wallet_module =
       require(
@@ -990,7 +991,17 @@ async function
       "3",           // max retries
       "10000"        // call timeout
     ];
+  _msg =
+    "Testing connectivity for " +
+    `network '${_target_chain}' RPC '${_rpc}'.`;
+  _msg_info(
+    _msg);
   try {
+    _msg =
+      "Testing connectivity for " +
+      `network '${_target_chain}' RPC '${_rpc}'.`;
+    _msg_info(
+      _msg);
     _block_number =
       await _block_number_get.apply(
          null,
@@ -1008,6 +1019,7 @@ async function
       _rpc);
     _block_number =
       0;
+    return _block_number;
   }
   return _block_number;
 }
