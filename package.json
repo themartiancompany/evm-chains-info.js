@@ -88,7 +88,7 @@
   },
   "overrides": {
     "evm-chains-info":
-      "../libevm-chains-info",
+      "^0.0.22",
     "evm-contracts-tools":
       "^0.0.32",
     "evm-wallet.js":
