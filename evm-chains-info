@@ -570,20 +570,22 @@ function
   }
 }
 
-function
+async function
   _evm_chains_info_cmdline(
     _app_opts) {
   let
     _result;
   const
     _results =
-      _evm_chains_info.apply(
+      await _evm_chains_info.apply(
         null,
         app_opts);
   for ( _result of _results ) {
     console.log(
       _result);
   }
+  _process_exit(
+    0);
 }
 
 _global_variables();
