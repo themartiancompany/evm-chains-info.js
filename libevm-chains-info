@@ -74,6 +74,12 @@ _json_read =
 _lib_get =
   _libcrash_module._lib_get;
 /* global
+     _mkdir */
+/* eslint-disable-next-line
+     no-global-assign */
+_mkdir =
+  _libcrash_module._mkdir;
+/* global
      _msg_info */
 /* eslint-disable-next-line
      no-global-assign */
@@ -923,7 +929,10 @@ function
 
 async function
   _rpc_check(
+    _target_chain,
     _rpc) {
+  let
+    _block_number;
   const
     _evm_wallet_module =
       require(
@@ -939,12 +948,67 @@ async function
       "3",           // max retries
       "10000"        // call timeout
     ];
-  _block_number =
-    await _block_number_get.apply(
-       null,
-      _block_number_get_args);
-  console.log(
-    _block_number);
+  try {
+    _block_number =
+      await _block_number_get.apply(
+         null,
+        _block_number_get_args);
+  }
+  catch(
+    _error) {
+    _msg =
+      `RPC '${_rpc}' for network ` +
+      `'${_target_chain}' offline.`;
+    _msg_info(
+      _msg);
+    _rpc_report_offline(
+      _target_chain,
+      _rpc);
+    _block_number =
+      0;
+  }
+  return _block_number;
+}
+
+_rpc_report_offline(
+  _target_chain,
+  _rpc) {
+  let
+    _score;
+  const
+    _home_dir =
+      _homedir_get();
+  const 
+    _score_dir =
+      _path_join(
+        [ _home_dir,
+          ".cache",
+          "evm-chains",
+          _target_chain,
+          "rpc",
+	  _rpc ]);
+  const
+    _score_path =
+      _path_join( [
+        _score_dir,
+        "offline" ]);
+  if ( ! _file_exists(
+           _score_dir) ) {
+    _mkdir(
+      _score_dir);
+  }
+  if ( _file_exists(
+       _score_path) {
+    _score =
+      _file_read(
+        _score_path);
+  }
+  else {
+    _score =
+      0;
+  }
+  _score =
+    _score + 1;
 }
 
 async function
@@ -958,7 +1022,7 @@ async function
   let
     _result,
     _rpc,
-    _status;
+    _online;
   const
     _results =
       _evm_chains_info_get(
@@ -973,9 +1037,16 @@ async function
         _db_paths);
   for ( _result of _results ) {
     for ( _rpc of _result ) {
-      _status =
-        await _rpc_check(
-          _rpc);
+      try {
+        _online =
+          await _rpc_check(
+            _rpc);
+      }
+      catch(
+        _error) {
+        _online =
+          0;
+      }
     }
   }
 }
