@@ -971,13 +971,13 @@ async function
         "n",       // all networks
         _api_key,
         _db_paths);
-  // for ( _result of _results ) {
-  //   for ( _rpc of _result ) {
-  //     _status =
-  //       _rpc_check(
-  //         _rpc);
-  //   }
-  // }
+  for ( _result of _results ) {
+    for ( _rpc of _result ) {
+      _status =
+        _rpc_check(
+          _rpc);
+    }
+  }
 }
 
 function
