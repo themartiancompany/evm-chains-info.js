@@ -1059,7 +1059,12 @@ function
   }
   else if ( _target_command == "check" ) {
     _chain_check(
-      _target_chain);
+      _target_chain,
+      _retrieval_mode,
+      _db_types,
+      _input_type,
+      _api_key,
+      _db_paths);
   }
   else {
     const
