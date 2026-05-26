@@ -956,7 +956,7 @@ function
       _score_dir);
   }
   if ( _file_exists(
-       _score_path) {
+       _score_path) ) {
     _score =
       _file_read(
         _score_path);
