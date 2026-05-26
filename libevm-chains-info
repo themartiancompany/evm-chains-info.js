@@ -927,6 +927,48 @@ function
   }
 }
 
+function
+  _rpc_report_offline(
+  _target_chain,
+  _rpc) {
+  let
+    _score;
+  const
+    _home_dir =
+      _homedir_get();
+  const 
+    _score_dir =
+      _path_join(
+        [ _home_dir,
+          ".cache",
+          "evm-chains",
+          _target_chain,
+          "rpc",
+          _rpc ]);
+  const
+    _score_path =
+      _path_join( [
+        _score_dir,
+        "offline" ]);
+  if ( ! _file_exists(
+           _score_dir) ) {
+    _mkdir(
+      _score_dir);
+  }
+  if ( _file_exists(
+       _score_path) {
+    _score =
+      _file_read(
+        _score_path);
+  }
+  else {
+    _score =
+      0;
+  }
+  _score =
+    _score + 1;
+}
+
 async function
   _rpc_check(
     _target_chain,
@@ -968,47 +1010,6 @@ async function
       0;
   }
   return _block_number;
-}
-
-_rpc_report_offline(
-  _target_chain,
-  _rpc) {
-  let
-    _score;
-  const
-    _home_dir =
-      _homedir_get();
-  const 
-    _score_dir =
-      _path_join(
-        [ _home_dir,
-          ".cache",
-          "evm-chains",
-          _target_chain,
-          "rpc",
-	  _rpc ]);
-  const
-    _score_path =
-      _path_join( [
-        _score_dir,
-        "offline" ]);
-  if ( ! _file_exists(
-           _score_dir) ) {
-    _mkdir(
-      _score_dir);
-  }
-  if ( _file_exists(
-       _score_path) {
-    _score =
-      _file_read(
-        _score_path);
-  }
-  else {
-    _score =
-      0;
-  }
-  _score =
-    _score + 1;
 }
 
 async function
