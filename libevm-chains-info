@@ -974,13 +974,13 @@ async function
   for ( _result of _results ) {
     for ( _rpc of _result ) {
       _status =
-        _rpc_check(
+        await _rpc_check(
           _rpc);
     }
   }
 }
 
-function
+async function
   _evm_chains_info(
     _target_command,
     _input_type,
@@ -1058,7 +1058,7 @@ function
       _input_type);
   }
   else if ( _target_command == "check" ) {
-    _chain_check(
+    await _chain_check(
       _target_chain,
       _retrieval_mode,
       _db_types,
