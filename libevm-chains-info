@@ -974,8 +974,16 @@ function
       _path_join( [
         _score_dir,
         "offline" ]);
-  _rm(
-    _score_path);
+  if ( _file_exists(
+         _score_path) ) {
+    _rm(
+      _score_path);
+    const
+      _msg =
+        `Deleting offline score for RPC '${_rpc}'`;
+    _msg_info(
+      _msg);
+  }
 }
 
 function
