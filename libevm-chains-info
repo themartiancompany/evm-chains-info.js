@@ -928,6 +928,33 @@ function
 }
 
 function
+  _rpc_report_online(
+    _target_chain,
+    _rpc) {
+  let
+    _score;
+  const
+    _home_dir =
+      _homedir_get();
+  const 
+    _score_dir =
+      _path_join(
+        [ _home_dir,
+          ".cache",
+          "evm-chains",
+          _target_chain,
+          "rpc",
+          _rpc ]);
+  const
+    _score_path =
+      _path_join( [
+        _score_dir,
+        "offline" ]);
+  _rm(
+    _score_path);
+}
+
+function
   _rpc_report_offline(
   _target_chain,
   _rpc) {
@@ -967,6 +994,10 @@ function
   }
   _score =
     _score + 1;
+  _file_write(
+    _score_path,
+    _score);
+  // TODO: write
 }
 
 async function
@@ -989,7 +1020,7 @@ async function
       "",            // _api key
       "",            // output file
       "3",           // max retries
-      "10000"        // call timeout
+      "10000"         // call timeout
     ];
   _msg =
     "Testing connectivity for " +
@@ -1006,14 +1037,20 @@ async function
       await _block_number_get.apply(
          null,
         _block_number_get_args);
+    if ( 0 < _block_number ) {
+      _rpc_report_online(
+        _target_chain,
+        _rpc);
+    }
   }
   catch(
     _error) {
     _msg =
       `RPC '${_rpc}' for network ` +
       `'${_target_chain}' offline.`;
-    _msg_info(
-      _msg);
+    _msg_error(
+      _msg,
+      0);
     _rpc_report_offline(
       _target_chain,
       _rpc);
@@ -1053,6 +1090,7 @@ async function
       try {
         _online =
           await _rpc_check(
+            _target_chain,
             _rpc);
       }
       catch(
