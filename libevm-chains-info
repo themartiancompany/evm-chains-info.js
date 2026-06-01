@@ -1009,6 +1009,8 @@ function
       _path_join( [
         _score_dir,
         "offline" ]);
+  console.log(
+    _score_dir);
   if ( ! _file_exists(
            _score_dir) ) {
     _mkdir(
@@ -1115,7 +1117,7 @@ async function
     _online;
   const
     _results =
-      _evm_chains_info_get(
+      await _evm_chains_info_get(
         _target_chain,
         _retrieval_mode,
         _db_types,
@@ -1220,6 +1222,7 @@ async function
       _input_type);
   }
   else if ( _target_command == "check" ) {
+    console.log("hello");
     await _chain_check(
       _target_chain,
       _retrieval_mode,
