@@ -1062,22 +1062,23 @@ async function
       "3",           // max retries
       "10000"         // call timeout
     ];
-  _msg =
-    "Testing connectivity for " +
-    `network '${_target_chain}' RPC '${_rpc}'.`;
-  _msg_info(
-    _msg);
   try {
     _msg =
       "Testing connectivity for " +
-      `network '${_target_chain}' RPC '${_rpc}'.`;
+      `RPC '${_rpc}' for network '${_target_chain}'.`;
     _msg_info(
       _msg);
     _block_number =
       await _block_number_get.apply(
          null,
         _block_number_get_args);
+    console.log(_block_number);
     if ( 0 < _block_number ) {
+      _msg =
+        `RPC '${_rpc}' for network ` +
+        `'${_target_chain}' online.`;
+      _msg_info(
+        _msg);
       _rpc_report_online(
         _target_chain,
         _rpc);
@@ -1116,6 +1117,9 @@ async function
     _rpc,
     _online;
   const
+    _status =
+      {};
+  const
     _results =
       await _evm_chains_info_get(
         _target_chain,
@@ -1134,14 +1138,21 @@ async function
           await _rpc_check(
             _target_chain,
             _rpc);
+        _status[
+          _rpc] =
+          true;
       }
       catch(
         _error) {
         _online =
           0;
+        _status[
+          _rpc] =
+          false;
       }
     }
   }
+  return _status;
 }
 
 async function
@@ -1222,14 +1233,17 @@ async function
       _input_type);
   }
   else if ( _target_command == "check" ) {
-    console.log("hello");
-    await _chain_check(
-      _target_chain,
-      _retrieval_mode,
-      _db_types,
-      _input_type,
-      _api_key,
-      _db_paths);
+    const
+      _status =
+        await _chain_check(
+          _target_chain,
+          _retrieval_mode,
+          _db_types,
+          _input_type,
+          _api_key,
+          _db_paths);
+    console.log(_status);
+    return _status;
   }
   else {
     const
