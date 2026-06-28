@@ -99,7 +99,7 @@ module.exports = {
       "evm-contracts-tools":
         _path.resolve(
           __dirname,
-          'node_modules/evm-contract-tools/evm-contracts-tools'),
+          'node_modules/evm-contracts-tools/evm-contracts-tools'),
       "evm-wallet.js":
         _path.resolve(
           __dirname,
