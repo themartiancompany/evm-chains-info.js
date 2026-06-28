@@ -44,6 +44,9 @@
      user_level */
 /* global
      target_chain */
+/* global
+     target_network:
+       writable */
 
 const
   _libcrash_module =
@@ -63,6 +66,20 @@ const
 const
   _file_exists =
     _libcrash_module._file_exists;
+/* global
+     _file_read */
+/* eslint-disable-next-line
+     no-global-assign */
+const
+  _file_read =
+    _libcrash_module._file_read;
+/* global
+     _file_write */
+/* eslint-disable-next-line
+     no-global-assign */
+const
+  _file_write =
+    _libcrash_module._file_write;
 /* global
      _json_read */
 /* eslint-disable-next-line
@@ -571,13 +588,12 @@ function
 
 function
   _input_type_auto_detect() {
-  let
-    _target_chain_type;
-  _target_chain_type =
-    typeof(
-      target_chain);
+  const
+    _target_chain_type =
+      typeof(
+        target_chain);
   if ( _target_chain_type == "number" ) {
-    _input_type =
+    input_type =
       "id";
   }
   else if ( _target_chain_type == "string" ) {
