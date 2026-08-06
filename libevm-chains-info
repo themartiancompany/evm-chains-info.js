@@ -272,7 +272,7 @@ async function
          _db_types == "" ) {
     _db_types = [
       "node",
-      "system"
+      "system",
     ];
   }
   if ( typeof(
@@ -568,8 +568,10 @@ function
     _msg_info(
       _msg);
     for ( _entry of _db ) {
-      if ( _entry[
-             _filter_key] == _target_chain ) {
+      if ( Number(
+             _entry[
+               _filter_key]) == Number(
+                                 _target_chain) ) {
         _results.push(
           _entry);
         if ( _selection_method == "kirsh" ) {
@@ -630,19 +632,29 @@ function
 }
  
 async function
-  _db_paths_auto_detect(
-    _chain_id) {
+  _db_paths_get(
+    _chain_id,
+    _user_level) {
   let
     _type_primary,
     _type_fallback,
     _msg;
-  if ( user_level == "y" ) {
+  if ( typeof(
+         _user_level) == "undefined" ||
+       _user_level == "" ) {
+    _user_level =
+      "n";
+  }
+  const
+    _db_paths =
+      [];
+  if ( _user_level == "y" ) {
     _type_primary =
       "y";
     _type_fallback =
       "n";
   }
-  else if ( user_level == "n" ) {
+  else if ( _user_level == "n" ) {
     _type_primary =
       "n";
     _type_fallback =
@@ -674,7 +686,7 @@ async function
         "split");
   if ( _file_exists(
            _db_split) ) {
-    db_paths.push(
+    _db_paths.push(
       _db_split);
     _msg =
       `Found database ` +
@@ -701,7 +713,7 @@ async function
   }
   if ( _file_exists(
          _db) ) {
-    db_paths.push(
+    _db_paths.push(
       _db);
     _msg =
       `Found database ` +
@@ -720,7 +732,7 @@ async function
   }
   if ( _file_exists(
            _db_fallback_split) ) {
-    db_paths.push(
+    _db_paths.push(
       _db_fallback_split);
     _msg =
       `Found database ` +
@@ -739,7 +751,7 @@ async function
   }
   if ( _file_exists(
          _db_fallback) ) {
-    db_paths.push(
+    _db_paths.push(
       _db_fallback);
     _msg =
       `Found database ` +
@@ -757,12 +769,23 @@ async function
       _msg,
       0);
   }
-  if ( db_paths.length == 0 ) {
+  if ( _db_paths.length == 0 ) {
     _msg =
       "Found no databases!";
     _msg_info(
       _msg);
   }
+  return _db_paths;
+}
+
+async function
+  _db_paths_auto_detect(
+    _chain_id,
+    _user_level) {
+  db_paths =
+    await _db_paths_get(
+      _chain_id,
+      _user_level);
 }
 
 function
@@ -1182,11 +1205,24 @@ async function
     _api_key,
     _networks_all,
     _target_chain,
-    _db_paths) {
+    _db_paths,
+    _user_level) {
   let
     _explorer,
     _result,
     _rpc;
+  if ( typeof(
+         _db_paths) == "undefined" ||
+       _db_paths == "" ) {
+    _db_paths =
+      [];
+  }
+  if ( _db_paths.length == 0 ) {
+    _db_paths =
+      await _db_paths_get(
+        _target_chain,
+        _user_level);
+  }
   if ( _target_command == "get" ) {
     const
       _infos =
@@ -1275,6 +1311,8 @@ async function
 module.exports = {
   _data_get:
     _data_get,
+  _db_paths_get:
+    _db_paths_get,
   _db_paths_auto_detect:
     _db_paths_auto_detect,
   _db_types_auto_detect:

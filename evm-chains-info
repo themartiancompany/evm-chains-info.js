@@ -32,8 +32,8 @@
 
 const
   _libcrash =
-  require(
-    'crash-js');
+    require(
+      'crash-js');
 /* global
      _argv_get */
 const
@@ -65,10 +65,15 @@ const
   _msg_error =
     _libcrash._msg_error;
 /* global
-     _process_exit */
+     _override_set */
 const
-_process_exit =
-  _libcrash._process_exit;
+  _override_set =
+    _libcrash._override_set;
+/* global
+     _exit */
+const
+_exit =
+  _libcrash._exit;
 
 const
   _libevm_chains_info =
@@ -201,44 +206,42 @@ function
 
 function 
   _overrides_set() {
-  if ( call_date == "" ) {
-    call_date =
-      _get_date_human();
-  }
-  if ( target_command == "" ) {
-    target_command =
-      "get";
-  }
+  _override_set(
+    "call",
+    "date",
+    _get_date_human());
+  _override_set(
+    "target",
+    "command",
+    "get");
   _input_type_auto_detect();
-  if ( output_type == "" ) {
-    output_type =
-      "name";
-  }
-  if ( retrieval_mode == "" ) {
-    retrieval_mode =
-      "offline";
-  }
-  if ( selection_method == "" ) {
-    // TODO:
-    //   remove all references
-    //   to that monster
-    selection_method =
-      "kirsh";
-  }
-  if ( api_key == "" ) {
-    api_key =
-      "n";
-  }
-  if ( user_level == "" ) {
-    user_level =
-      "y";
-  }
-  if ( networks_all == "" ) {
-    networks_all =
-      "n";
-  }
+  _override_set(
+    "output",
+    "type",
+    "name");
+  _override_set(
+    "retrieval",
+    "mode",
+    "offline");
+  _override_set(
+    "selection",
+    "method",
+    "kirsh");
+  _override_set(
+    "api",
+    "key",
+    "n");
+  _override_set(
+    "user",
+    "level",
+    "y");
+  _override_set(
+    "networks",
+    "all",
+    "n");
   _db_paths_auto_detect(
-    target_chain);
+    target_chain,
+    user_level);
   _db_types_auto_detect();
 }
 
@@ -329,7 +332,7 @@ function
     console.log(
       _line);
   }
-  _process_exit(
+  _exit(
     _exit_code);
 }
 
@@ -584,15 +587,15 @@ async function
     console.log(
       _result);
   }
-  _process_exit(
+  _exit(
     0);
 }
 
 _global_variables();
 if ( _cmdline_check(
-       "evm-chains-info.js") == true ||
+       "evm-chains-info.js") ||
      _cmdline_check(
-       "evm-chains-info") == true ) {
+       "evm-chains-info") ) {
   _cmdline_parse();
 }
 else{
@@ -610,7 +613,8 @@ app_opts = [
   api_key,
   networks_all,
   target_chain,
-  db_paths
+  db_paths,
+  user_level
 ];
 _evm_chains_info_cmdline(
   app_opts);
