@@ -34,7 +34,8 @@
      no-useless-assignment */
 
 /* global 
-     db_paths */
+     db_paths:
+       writable */
 /* global 
      db_types */
 /* global
