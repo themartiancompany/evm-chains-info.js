@@ -109,13 +109,18 @@ const
   _range =
     _libcrash_module._range;
 /* global
+     _require */
+const
+  _require =
+    _libcrash_module._require;
+/* global
      _rm */
 const
   _rm =
     _libcrash_module._rm;
 const
   _ethereum_data_module =
-    require(
+    await _require(
       "ethereum-data");
 /* global
      _data_get */
@@ -805,7 +810,7 @@ function
   if ( _info_get ) {
     const
       _libevm_module =
-        require(
+        await _require(
           "libevm");
     const
       _rpc_get =
@@ -1065,8 +1070,8 @@ async function
     _msg;
   const
     _evm_wallet_module =
-      require(
-        "evm-wallet.js");
+      await _require(
+        "evm-wallet");
   const
     _block_number_get =
       _evm_wallet_module._block_number_get;
