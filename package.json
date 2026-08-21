@@ -58,7 +58,7 @@
   },
   "devDependencies": {
     "crash-js-webpack":
-      "^0.0.47",
+      "^0.0.48",
     "flatted":
       "^3.2.9",
     "eslint":
@@ -68,7 +68,7 @@
     "@eslint/js":
       "^10.0.1",
     "safely-serve":
-      "^0.0.9",
+      "^0.0.11",
     "webpack":
       "^5.109.2",
     "webpack-cli":
@@ -76,9 +76,9 @@
   },
   "dependencies": {
     "crash-js":
-      "^0.111111.1111111111111111",
+      "^0.1111111111.1111111111111111",
     "ethereum-data":
-      "^0.0.6",
+      "^0.0.8",
     "yargs":
       "18.0.0"
   },
@@ -95,7 +95,7 @@
       "npm:evm-wallet.js@^0.0.75"
   },
   "type":
-    "commonjs",
+    "module",
   "main":
     "libevm-chains-info",
   "bin": {

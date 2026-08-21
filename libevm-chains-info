@@ -37,22 +37,28 @@
      db_paths:
        writable */
 /* global 
-     db_types */
+     db_types:
+       writable */
 /* global
      input_type:
        writable */
 /* global
-     user_level */
+     user_level:
+       writable */
 /* global
-     target_chain */
+     target_chain:
+       writable */
 /* global
      target_network:
        writable */
 
 const
-  _libcrash_module =
-    require(
+  _libcrash_module_import =
+    await import(
       "crash-js");
+const
+  _libcrash_module =
+    _libcrash_module_import.default;
 /* global
      _homedir_get */
 const
@@ -770,7 +776,7 @@ async function
       _user_level);
 }
 
-function
+async function
   _target_network_type_auto_detect() {
   let
     _info_get,
@@ -1312,5 +1318,7 @@ module.exports = {
   _rpc_backend_get:
     _rpc_backend_get,
   _rpc_backends_get:
-    _rpc_backends_get
+    _rpc_backends_get,
+  _target_network_type_auto_detect:
+    _target_network_type_auto_detect
 };
