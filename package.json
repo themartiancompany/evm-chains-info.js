@@ -84,7 +84,7 @@
   },
   "optionalDependencies": {
     "evm-wallet":
-      "^0.0.75"
+      "npm:evm-wallet.js@^0.0.75"
   },
   "overrides": {
     "evm-chains-info":
