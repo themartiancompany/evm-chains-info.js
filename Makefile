@@ -262,9 +262,9 @@ install-man:
 
 uninstall-scripts:
 
-	rm 
+	rm  \
 	  -rf \
 	  "$(LIB_DIR)" \
 	  "$(LIB_DIR)/$(_PROJECT_NPM)-js"
 
-.PHONY: check build-man build-npm clean install install-doc install-man install-npm install-scripts shellcheck
+.PHONY: check build-man build-npm clean install install-doc install-man install-npm install-scripts shellcheck uninstall-scripts
