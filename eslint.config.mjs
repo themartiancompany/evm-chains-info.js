@@ -76,7 +76,6 @@ export default defineConfig([
    files:
      [ "**/*.js",
        `**/${_project}*`,
-       `**/lib${_project}`,
      ],
    languageOptions:
      { sourceType:

@@ -260,4 +260,11 @@ install-man:
 	  "build/man/$(_PROJECT).1" \
 	  "$(MAN_DIR)/man1/$(_PROJECT).1"
 
+uninstall-scripts:
+
+	rm 
+	  -rf \
+	  "$(LIB_DIR)" \
+	  "$(LIB_DIR)/$(_PROJECT_NPM)-js"
+
 .PHONY: check build-man build-npm clean install install-doc install-man install-npm install-scripts shellcheck
