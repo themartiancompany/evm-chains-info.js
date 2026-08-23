@@ -269,6 +269,7 @@ install-scripts:
 	    $(_MAKE_LINK) \
 	      "$(PREFIX)/lib/$(_PROJECT_NPM)/nodejs/$(_PROJECT_NPM)" \
 	      "$(BIN_DIR)/$(_PROJECT_NPM)"; \
+	  fi; \
 	  rm \
 	    "$(LIB_DIR)/node_modules" || \
 	    true; \
