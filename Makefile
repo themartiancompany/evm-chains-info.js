@@ -259,6 +259,9 @@ install-scripts:
 	    "$(LIB_DIR)/nodejs"; \
 	  $(_MAKE_EXE) \
 	    "$(LIB_DIR)/nodejs/$(_PROJECT_NPM)"; \
+	  rm \
+	    -vf \
+	    "$(BIN_DIR)/$(_PROJECT)"; \
 	  if [[ ! -s "$(BIN_DIR)/$(_PROJECT)" ]]; then \
 	    $(_MAKE_LINK) \
 	      "$(PREFIX)/lib/$(_PROJECT_NPM)/nodejs/$(_PROJECT_NPM)" \
@@ -367,7 +370,10 @@ uninstall-scripts:
 
 	rm  \
 	  -vrf \
-	  "$(LIB_DIR)" \
-	  "$(LIB_DIR)/$(_PROJECT_NPM)"
+	  "$(LIB_DIR)/nodejs" \
+	  "$(LIB_DIR)/$(_PROJECT_NPM)" \
+	  "$(DESTDIR)$(PREFIX)/lib/$(_PROJECT)" \
+	  "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT_NPM)" \
+	  "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT)"
 
 .PHONY: check build-man build-npm clean install install-doc install-man install-npm install-scripts shellcheck uninstall-scripts

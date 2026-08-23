@@ -32,8 +32,8 @@
 
 const
   _libcrash =
-    require(
-      'crash-js');
+    await import(
+      "libcrash-js");
 /* global
      _argv_get */
 const
@@ -50,10 +50,20 @@ const
   _cmdline_check =
     _libcrash._cmdline_check;
 /* global
+     _exit */
+const
+  _exit =
+    _libcrash._exit;
+/* global
      _get_date_human */
 const
   _get_date_human =
     _libcrash._get_date_human;
+/* global
+     _global_get */
+const
+  _global_get =
+    _libcrash._global_get;
 /* global
      _msg_info */
 const
@@ -70,14 +80,14 @@ const
   _override_set =
     _libcrash._override_set;
 /* global
-     _exit */
+     _set */
 const
-_exit =
-  _libcrash._exit;
+  _set =
+    _libcrash._set;
 
 const
   _libevm_chains_info =
-    require(
+    await import(
       "./libevm-chains-info");
 /* global
      _evm_chains_db_path_get */
@@ -120,87 +130,122 @@ function
   /* global
        app_name:
          writable */
-  app_name =
-    "evm-chains-info.js";
+  _set(
+    "app",
+    "name",
+    "evm-chains-info.js");
   /* global
        app_opts:
          writable */
-  app_opts =
-    [];
+  _set(
+    "app",
+    "opts",
+    []);
   /* global
        runtime_environment:
          writable */
-  runtime_environment =
-    "";
+  _set(
+    "runtime",
+    "environment",
+    "");
   /* global
        call_date:
          writable */
-  call_date =
-    "";
+  _set(
+    "call",
+    "date",
+    "");
   /* global
        target_command:
          writable */
-  target_command =
-    "";
+  _set(
+    "target",
+    "command",
+    "");
   /* global
        input_type:
          writable */
-  input_type =
-    "";
+  _set(
+    "input",
+    "type",
+    "");
   /* global
        output_type:
          writable */
-  output_type =
-    "";
+  _set(
+    "output",
+    "type",
+    "");
   /* global
        retrieval_mode:
          writable */
-  retrieval_mode =
-    "";
+  _set(
+    "retrieval",
+    "mode",
+    "");
   /* global
        db_types:
          writable */
-  db_types =
-    [];
+  _set(
+    "retrieval",
+    "mode",
+    []);
   /* global
        user_level:
          writable */
-  user_level =
-    "";
+  _set(
+    "user",
+    "level",
+    "");
   /* global
        db_paths:
          writable */
-  db_paths =
-    [];
+  _set(
+    "db",
+    "paths",
+    []);
   /* global
        selection_method:
          writable */
-  selection_method =
-    "";
+  _set(
+    "selection",
+    "method",
+    "");
   /* global
        api_key:
          writable */
-  api_key =
-    "";
+  _set(
+    "api",
+    "key",
+    "");
   /* global
        target_chain:
          writable */
-  target_chain =
-    "";
+  _set(
+    "target",
+    "chain",
+    "");
   /* global
        networks_all:
          writable */
-  networks_all =
-    "";
+  _set(
+    "networks",
+    "all",
+    "");
   /* global
        quiet:
          writable */
-  quiet =
+  const
+    _global =
+      _global_get();
+  _global[
+    "quiet"] =
     "";
   /* global
        verbose:
          writable */
-  verbose =
+  _global[
+    "verbose"] =
     "";
 }
 
@@ -336,7 +381,7 @@ function
     _exit_code);
 }
 
-function 
+async function 
   _cmdline_parse() {
   let
     _help_display,
@@ -352,7 +397,7 @@ function
     };
   const
     _argv =
-      _argv_get(
+      await _argv_get(
         _argv_args);
   const
     _options =
@@ -592,11 +637,11 @@ async function
 }
 
 _global_variables();
-if ( _cmdline_check(
+if ( await _cmdline_check(
        "evm-chains-info.js") ||
-     _cmdline_check(
+     await _cmdline_check(
        "evm-chains-info") ) {
-  _cmdline_parse();
+  await _cmdline_parse();
 }
 else{
   _url_parse();

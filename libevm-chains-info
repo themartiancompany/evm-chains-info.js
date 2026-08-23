@@ -53,12 +53,14 @@
        writable */
 
 const
-  _libcrash_module_import =
-    await import(
-      "crash-js");
-const
   _libcrash_module =
-    _libcrash_module_import.default;
+    await import(
+      "libcrash-js");
+/* global
+     _get */
+const
+  _get =
+    _libcrash_module._get;
 /* global
      _homedir_get */
 const
@@ -124,6 +126,11 @@ const
 const
   _rm =
     _libcrash_module._rm;
+/* global
+     _get */
+const
+  _set =
+    _libcrash_module._set;
 const
   _ethereum_data_module =
     await _require(
@@ -607,15 +614,60 @@ function
 }
 
 function
-  _db_types_auto_detect(
-    _chain_id) {
-  if ( db_types.length == 0 ) {
-    db_types.push(
+  _db_types_get(
+    _chain_id,
+    _db_types) {
+  let
+    _db_paths;
+  const
+    _db_types_type =
+      typeof(
+        _db_types);
+  if ( _db_types_type == "undefined" ) {
+    _db_types =
+      [];
+  }
+  _db_paths =
+    _get(
+      "db",
+      "paths");
+  if ( _db_types.length == 0 ) {
+    _db_types.push(
       "node");
   }
-  if ( db_paths.length > 0 ) {
-    db_types.push(
+  const
+    _db_paths_type =
+      typeof(
+        _db_paths);
+  if ( _db_paths_type == "undefined" ||
+       _db_paths_type == "string" ) {
+    _db_paths =
+      []
+  }
+  if ( _db_paths.length > 0 ) {
+    _db_types.push(
       "system");
+  }
+  return _db_types;
+}
+
+function
+  _db_types_auto_detect(
+    _chain_id) {
+  let
+    _db_types;
+  _db_types =
+    _get(
+      "db",
+      "types");
+  _db_types =
+    _db_types_get(
+      _db_types);
+  if ( 0 < _db_types.length ) {
+    _set(
+      "db",
+      "types",
+      _db_types);
   }
 }
  
@@ -1295,30 +1347,49 @@ async function
       1);
   }
 }
- 
-module.exports = {
-  _data_get:
-    _data_get,
-  _db_paths_get:
-    _db_paths_get,
-  _db_paths_auto_detect:
-    _db_paths_auto_detect,
-  _db_types_auto_detect:
-    _db_types_auto_detect,
-  _evm_chains_db_path_get:
-    _evm_chains_db_path_get,
-  _evm_chains_info:
-    _evm_chains_info,
-  _evm_chains_info_get:
-    _evm_chains_info_get,
-  _evm_chains_info_set:
-    _evm_chains_info_set,
-  _input_type_auto_detect:
-    _input_type_auto_detect,
-  _rpc_backend_get:
-    _rpc_backend_get,
-  _rpc_backends_get:
-    _rpc_backends_get,
-  _target_network_type_auto_detect:
-    _target_network_type_auto_detect
+
+// ES6 module exports
+
+export {
+  _data_get,
+  _db_paths_get,
+  _db_paths_auto_detect,
+  _db_types_auto_detect,
+  _evm_chains_db_path_get,
+  _evm_chains_info,
+  _evm_chains_info_get,
+  _evm_chains_info_set,
+  _input_type_auto_detect,
+  _rpc_backend_get,
+  _rpc_backends_get,
+  _target_network_type_auto_detect
 };
+
+// Common Javascript exports
+
+// module.exports = {
+//   _data_get:
+//     _data_get,
+//   _db_paths_get:
+//     _db_paths_get,
+//   _db_paths_auto_detect:
+//     _db_paths_auto_detect,
+//   _db_types_auto_detect:
+//     _db_types_auto_detect,
+//   _evm_chains_db_path_get:
+//     _evm_chains_db_path_get,
+//   _evm_chains_info:
+//     _evm_chains_info,
+//   _evm_chains_info_get:
+//     _evm_chains_info_get,
+//   _evm_chains_info_set:
+//     _evm_chains_info_set,
+//   _input_type_auto_detect:
+//     _input_type_auto_detect,
+//   _rpc_backend_get:
+//     _rpc_backend_get,
+//   _rpc_backends_get:
+//     _rpc_backends_get,
+//   _target_network_type_auto_detect:
+//     _target_network_type_auto_detect
+// };
