@@ -301,7 +301,7 @@ install-scripts:
 	    "$(PREFIX)/lib/node_modules/$(_PROJECT_NPM)" \
 	    "$(LIB_DIR)/nodejs" || \
 	  true; \
-	fi
+	fi;
 
 install-npm:
 
