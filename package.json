@@ -2,7 +2,7 @@
   "name":
     "evm-chains-info",
   "version":
-    "0.0.31",
+    "0.0.32",
   "description":
     "Returns information about Ethereum Virtual Machine (EVM) blockchains.",
   "funding": {
@@ -22,7 +22,6 @@
     "evm-chains-info",
     "libevm-chains-info",
     "fs-worker.webpack.config.cjs",
-    "index.html",
     "package.json",
     "serve.json",
     "webpack.config.cjs"
@@ -58,17 +57,17 @@
   },
   "devDependencies": {
     "crash-js-webpack":
-      "^0.0.48",
+      "^0.0.59",
     "flatted":
-      "^3.2.9",
+      "^3.4.4",
     "eslint":
-      "^10.0.3",
+      "^10.9.0",
     "globals":
       "^17.3.0",
     "@eslint/js":
       "^10.0.1",
     "safely-serve":
-      "^0.0.11",
+      "^0.0.16",
     "webpack":
       "^5.109.2",
     "webpack-cli":
@@ -76,9 +75,9 @@
   },
   "dependencies": {
     "crash-js":
-      "^0.1111111111.1111111111111111",
+      "^100001.1000000000000001.1000000000000001",
     "ethereum-data":
-      "^0.0.8",
+      "^0.0.9",
     "yargs":
       "18.0.0"
   },

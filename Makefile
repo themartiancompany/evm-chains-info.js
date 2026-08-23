@@ -24,7 +24,8 @@
 #    along with this program.
 #    If not, see <https://www.gnu.org/licenses/>.
 
-SHELL=bash
+_NPM ?= false
+SHELL ?= bash
 PREFIX ?= /usr/local
 _PROJECT_NPM=evm-chains-info
 _PROJECT=$(_PROJECT_NPM).js
@@ -37,6 +38,12 @@ MAN_DIR?=$(DESTDIR)$(PREFIX)/share/man
 NODE_DIR=$(PREFIX)/lib/node_modules/$(_PROJECT)
 BUILD_NPM_DIR=build
 
+_MAKE_LINK=\
+  ln \
+    -s
+_MAKE_EXE=\
+  chmod \
+    755
 _INSTALL_FILE=\
   install \
     -vDm644
@@ -65,27 +72,7 @@ NPM_FILES=\
   "package.json" \
   "webpack.config.cjs"
 
-all: build-man build-npm
-
-check: eslint
-
-eslint:
-
-	npm \
-	  install \
-	  --save-dev \
-	  "."; \
-	npx \
-	  eslint \
-	    "."
-
-clean:
-
-	cd \
-	  "build"; \
-	rm \
-	  -rf \
-	  "node_modules"
+all: build 
 
 build-man:
 
@@ -182,10 +169,132 @@ build-npm:
 	  "$(_PROJECT_NPM)-$${_version}.tgz" \
 	  ".."
 
+build-webpack:
+
+	cp \
+	  -r \
+	  "$(_PROJECT)" \
+	  "dist" \
+	  "lib$(_PROJECT)" \
+	  "webpack.config.cjs" \
+	  "build"
+	_webpack=( \
+	  "$$(command \
+	        -v \
+	        "webpack")"; \
+	if [[ "${_webpack}" == "" ]]; then \
+	  _webpack=(
+	    npx
+	      webpack); \
+	fi; \
+	cd \
+	  "build"; \
+	if [[ ! -e "fs-worker.js" ]]; then \
+          "${_webpack[@]}" \
+	    --mode \
+	      'production' \
+	    --config \
+	    'fs-worker.webpack.config.cjs' \
+	    --stats-error-details; \
+	fi; \
+	cp \
+	  'fs-worker.js' \
+	  'dist/$(_PROJECT)/fs-worker.js'; \
+	cp \
+	  'fs-worker.js' \
+	  'dist/lib$(_PROJECT)/fs-worker.js'; \
+	if [[ ! -e "$(_PROJECT).js" ]]; then \
+          "${_webpack[@]}" \
+	    --mode \
+	      'production' \
+	    --config \
+	      'webpack.config.cjs' \
+	    --stats-error-details; \
+	fi; \
+	cp \
+	  "$(_PROJECT).js" \
+	  "dist/$(_PROJECT)/$(_PROJECT).js"
+	if [[ ! -e "lib$(_PROJECT).js" ]]; then \
+          "${_webpack[@]}" \
+	    --mode \
+	      'production' \
+	    --config \
+
+check: eslint
+
+eslint:
+
+	npm \
+	  install \
+	  --save-dev \
+	  "."; \
+	npx \
+	  eslint \
+	    "."
+
+clean:
+
+	cd \
+	  "build"; \
+	rm \
+	  -rf \
+	  "node_modules"
 
 install: install-npm install-scripts install-doc install-examples install-man
 
 install-scripts:
+
+	if [[ "$(_NPM)" == "false" ]]; then \
+	  if [[ ! -s "$(BIN_DIR)/$(_PROJECT)" ]]; then \
+	    $(_MAKE_EXE) \
+	      "$(LIB_DIR)/nodejs/$(_PROJECT)"; \
+	    $(_MAKE_LINK) \
+	      "$(PREFIX)/lib/$(_PROJECT)/nodejs/$(_PROJECT)" \
+	      "$(BIN_DIR)/$(_PROJECT)"; \
+	  fi; \
+	  $(_INSTALL_DIR) \
+	    "$(LIB_DIR)/nodejs"; \
+	  rm \
+	    "$(LIB_DIR)/node_modules" || \
+	    true; \
+	  if [[ ! -s "$(LIB_DIR)/node_modules" ]]; then \
+	    $(_MAKE_LINK) \
+	      "$(PREFIX)/lib/node_modules" \
+	      "$(LIB_DIR)/nodejs/node_modules"; \
+	  fi; \
+	  rm \
+	    -rf \
+	    "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT)" \
+	    "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT_NPM)"; \
+	  if [[ ! -s "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT_NPM)" ]]; then \
+	    $(_MAKE_LINK) \
+	      "$(PREFIX)/lib/$(_PROJECT)/nodejs" \
+	      "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT_NPM)"; \
+	  fi; \
+	  $(_MAKE_LINK) \
+	    "$(PREFIX)/lib/$(_PROJECT)/nodejs" \
+	    "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT)" || \
+	    true; \
+	  cp \
+	    -r \
+	    $$(printf \
+	         "$${PWD}/%s " \
+	         $$(cat \
+	              "$${PWD}/package.json" | \
+	              jq \
+	                --raw-output \
+	                '.files[]')) \
+	    "$(LIB_DIR)/nodejs"; \
+	  $(_MAKE_EXE) \
+	    "$(LIB_DIR)/nodejs/$(_PROJECT)"; \
+	elif [[ "$(_NPM)" == "true" ]]; then \
+	  make \
+	    install-npm; \
+	  $(_MAKE_LINK) \
+	    "$(PREFIX)/lib/node_modules/$(_PROJECT_NPM)" \
+	    "$(LIB_DIR)/nodejs" || \
+	  true; \
+	fi
 
 	$(_INSTALL_DIR) \
 	  "$(LIB_DIR)"
@@ -260,11 +369,17 @@ install-man:
 	  "build/man/$(_PROJECT).1" \
 	  "$(MAN_DIR)/man1/$(_PROJECT).1"
 
+uninstall-man:
+
+	rm  \
+	  -vrf \
+	  "$(MAN_DIR)/man1/$(_PROJECT).1"
+
 uninstall-scripts:
 
 	rm  \
-	  -rf \
+	  -vrf \
 	  "$(LIB_DIR)" \
-	  "$(LIB_DIR)/$(_PROJECT_NPM)-js"
+	  "$(LIB_DIR)/$(_PROJECT_NPM)"
 
 .PHONY: check build-man build-npm clean install install-doc install-man install-npm install-scripts shellcheck uninstall-scripts
