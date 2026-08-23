@@ -127,7 +127,7 @@ const
   _rm =
     _libcrash_module._rm;
 /* global
-     _get */
+     _set */
 const
   _set =
     _libcrash_module._set;
@@ -642,7 +642,7 @@ function
   if ( _db_paths_type == "undefined" ||
        _db_paths_type == "string" ) {
     _db_paths =
-      []
+      [];
   }
   if ( _db_paths.length > 0 ) {
     _db_types.push(
