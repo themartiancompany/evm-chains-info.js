@@ -302,8 +302,6 @@ install-scripts:
 	      "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT_NPM)" || \
 	      true; \
 	  fi; \
-	  $(_MAKE_EXE) \
-	    "$(LIB_DIR)/nodejs/$(_PROJECT)"; \
 	elif [[ "$(_NPM)" == "true" ]]; then \
 	  make \
 	    install-npm; \
