@@ -33,9 +33,9 @@ _NAMESPACE=themartiancompany
 DOC_DIR=$(DESTDIR)$(PREFIX)/share/doc/$(_PROJECT)
 USR_DIR=$(DESTDIR)$(PREFIX)
 BIN_DIR=$(DESTDIR)$(PREFIX)/bin
-LIB_DIR=$(DESTDIR)$(PREFIX)/lib/$(_PROJECT)
+LIB_DIR=$(DESTDIR)$(PREFIX)/lib/$(_PROJECT_NPM)
 MAN_DIR?=$(DESTDIR)$(PREFIX)/share/man
-NODE_DIR=$(PREFIX)/lib/node_modules/$(_PROJECT)
+NODE_DIR=$(PREFIX)/lib/node_modules/$(_PROJECT_NPM)
 BUILD_NPM_DIR=build
 
 _MAKE_LINK=\
@@ -245,15 +245,30 @@ install: install-npm install-scripts install-doc install-examples install-man
 install-scripts:
 
 	if [[ "$(_NPM)" == "false" ]]; then \
-	  if [[ ! -s "$(BIN_DIR)/$(_PROJECT)" ]]; then \
-	    $(_MAKE_EXE) \
-	      "$(LIB_DIR)/nodejs/$(_PROJECT)"; \
-	    $(_MAKE_LINK) \
-	      "$(PREFIX)/lib/$(_PROJECT)/nodejs/$(_PROJECT)" \
-	      "$(BIN_DIR)/$(_PROJECT)"; \
-	  fi; \
 	  $(_INSTALL_DIR) \
 	    "$(LIB_DIR)/nodejs"; \
+	  cp \
+	    -r \
+	    $$(printf \
+	         "$${PWD}/%s " \
+	         $$(cat \
+	              "$${PWD}/package.json" | \
+	              jq \
+	                --raw-output \
+	                '.files[]')) \
+	    "$(LIB_DIR)/nodejs"; \
+	  $(_MAKE_EXE) \
+	    "$(LIB_DIR)/nodejs/$(_PROJECT_NPM)"; \
+	  if [[ ! -s "$(BIN_DIR)/$(_PROJECT)" ]]; then \
+	    $(_MAKE_LINK) \
+	      "$(PREFIX)/lib/$(_PROJECT_NPM)/nodejs/$(_PROJECT_NPM)" \
+	      "$(BIN_DIR)/$(_PROJECT)"; \
+	  fi; \
+	  if [[ ! -s "$(BIN_DIR)/$(_PROJECT_NPM)" && \
+	        ! -e "$(BIN_DIR)/$(_PROJECT_NPM)" ]]; then \
+	    $(_MAKE_LINK) \
+	      "$(PREFIX)/lib/$(_PROJECT_NPM)/nodejs/$(_PROJECT_NPM)" \
+	      "$(BIN_DIR)/$(_PROJECT_NPM)"; \
 	  rm \
 	    "$(LIB_DIR)/node_modules" || \
 	    true; \
@@ -266,25 +281,17 @@ install-scripts:
 	    -rf \
 	    "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT)" \
 	    "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT_NPM)"; \
+	  if [[ ! -s "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT)" ]]; then \
+	    $(_MAKE_LINK) \
+	      "$(PREFIX)/lib/$(_PROJECT_NPM)/nodejs" \
+	      "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT)"; \
+	  fi; \
 	  if [[ ! -s "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT_NPM)" ]]; then \
 	    $(_MAKE_LINK) \
-	      "$(PREFIX)/lib/$(_PROJECT)/nodejs" \
-	      "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT_NPM)"; \
+	      "$(PREFIX)/lib/$(_PROJECT_NPM)/nodejs" \
+	      "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT_NPM)" || \
+	      true; \
 	  fi; \
-	  $(_MAKE_LINK) \
-	    "$(PREFIX)/lib/$(_PROJECT)/nodejs" \
-	    "$(DESTDIR)$(PREFIX)/lib/node_modules/$(_PROJECT)" || \
-	    true; \
-	  cp \
-	    -r \
-	    $$(printf \
-	         "$${PWD}/%s " \
-	         $$(cat \
-	              "$${PWD}/package.json" | \
-	              jq \
-	                --raw-output \
-	                '.files[]')) \
-	    "$(LIB_DIR)/nodejs"; \
 	  $(_MAKE_EXE) \
 	    "$(LIB_DIR)/nodejs/$(_PROJECT)"; \
 	elif [[ "$(_NPM)" == "true" ]]; then \
@@ -295,26 +302,6 @@ install-scripts:
 	    "$(LIB_DIR)/nodejs" || \
 	  true; \
 	fi
-
-	$(_INSTALL_DIR) \
-	  "$(LIB_DIR)"
-	for _file in $(NPM_FILES); do \
-	  if [[ -d "$${_file}" ]]; then \
-	    cp \
-	      -r \
-	      "$${_file}" \
-	      "$(LIB_DIR)/nodejs"; \
-	  elif [[ -e "$${_file}" ]]; then \
-	    $(_INSTALL_FILE) \
-	      "$${_file}" \
-	      "$(LIB_DIR)/nodejs/$${_file}"; \
-	  fi; \
-	done
-	ln \
-	  -s \
-	  "$(PREFIX)/lib/$(_PROJECT_NPM)/nodejs/lib$(_PROJECT_NPM)" \
-	  "$(LIB_DIR)/$(_PROJECT_NPM)-js" || \
-	true
 
 install-npm:
 
