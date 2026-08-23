@@ -219,6 +219,12 @@ build-webpack:
 	    --mode \
 	      'production' \
 	    --config \
+	      'webpack.config.cjs' \
+	    --stats-error-details; \
+	fi; \
+	cp \
+	  "lib$(_PROJECT).js" \
+	  "dist/lib$(_PROJECT)/lib$(_PROJECT).js"
 
 check: eslint
 
