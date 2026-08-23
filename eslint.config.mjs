@@ -30,17 +30,25 @@ import { defineConfig } from "eslint/config";
 const
   _project =
     "evm-chains-info";
+const
+  ignores = [
+    "build/**",
+    "dist/**",
+    "eslint.config.js",
+    `**/${_project}.js`,
+    `**/*.${_project}.js`,
+    "fs-worker.js",
+    "**/*.fs-worker.js",
+    `**/lib${_project}.js`,
+    `**/*.lib${_project}.js`,
+    "man/**",
+    "node_modules/**"
+  ];
 
 export default defineConfig([
  {
-   ignores: [
-     "build/**",
-     "dist/**",
-     "fs-worker.js",
-     "node_modules/**",
-     "eslint.config.js",
-     "man/**"
-   ],
+   ignores:
+     _ignores,
    rules:
      { semi:
          "error",
@@ -60,22 +68,15 @@ export default defineConfig([
          {  ...globals.browser,
             ...globals.node } } },
  { 
-   ignores: [
-     "build/**",
-     "dist/**",
-     "eslint.config.js",
-     "fs-worker.js",
-     "node_modules/**",
-     "man/**"
-   ],
+   ignores:
+     _ignores,
    rules:
      { semi:
          "error",
        "prefer-const":
          "error" },
    files:
-     [ "**/*.js",
-       `**/${_project}*`,
+     [ "**/*.{cjs,js}",
      ],
    languageOptions:
      { sourceType:
