@@ -31,7 +31,7 @@ const
   _project =
     "evm-chains-info";
 const
-  ignores = [
+  _ignores = [
     "build/**",
     "dist/**",
     "eslint.config.js",
