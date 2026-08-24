@@ -50,10 +50,20 @@ const
   _cmdline_check =
     _libcrash._cmdline_check;
 /* global
+     _echo */
+const
+  _echo =
+    _libcrash._echo;
+/* global
      _exit */
 const
   _exit =
     _libcrash._exit;
+/* global
+     _get */
+const
+  _get =
+    _libcrash._get;
 /* global
      _get_date_human */
 const
@@ -374,7 +384,7 @@ function
       "     -v --verbose                    Enable verbose output."
     ];
   for ( _line of _text ) {
-    console.log(
+    _echo(
       _line);
   }
   _exit(
@@ -400,15 +410,21 @@ async function
       await _argv_get(
         _argv_args);
   const
+    _global =
+      _global_get();
+  const
     _options =
       _argv[
         "_"];
-  quiet = 
+  _global[
+    "quiet"] = 
     "y";
   _help_display =
     false;
-  runtime_environment =
-    "node";
+  _set(
+    "runtime",
+    "environment",
+    "node");
   if ( _argv["h"] == true ) {
     _help_display =
       true;
@@ -425,7 +441,8 @@ async function
       true;
   }
   if ( _help_display ) {
-    quiet =
+    _global[
+      "quiet"] =
       "n";
     _overrides_set();
     _usage(
@@ -448,115 +465,170 @@ async function
     _usage(
       0);
   }
-  target_chain =
+  _set(
+    "target",
+    "chain",
     _argv[
       "_"][
-        0];
+        0]);
   if ( "C" in _argv ) {
-    target_command =
+    _set(
+      "target",
+      "chain",
       _argv[
-        "C"];
+        "C"]);
   }
   if ( "command" in _argv ) {
-    target_command =
+    _set(
+      "target",
+      "command",
       _argv[
-        "command"];
+        "command"]);
   }
   if ( "i" in _argv ) {
-    input_type =
+    _set(
+      "input",
+      "type",
       _argv[
-        "i"];
+        "i"]);
   }
   if ( "input-type" in _argv ) {
-    input_type =
+    _set(
+      "input",
+      "type",
       _argv[
-        "input-type"];
+        "input-type"]);
   }
   if ( "o" in _argv ) {
-    output_type =
+    _set(
+      "output",
+      "type",
       _argv[
-        "o"];
+        "o"]);
   }
   if ( "output-type" in _argv ) {
-    output_type =
+    _set(
+      "output",
+      "type",
       _argv[
-        "output-type"];
+        "output-type"]);
   }
   if ( "m" in _argv ) {
-    retrieval_mode =
+    _set(
+      "retrieval",
+      "mode",
       _argv[
-        "m"];
+        "m"]);
   }
   if ( "retrieval-mode" in _argv ) {
-    retrieval_mode =
+    _set(
+      "retrieval",
+      "mode",
       _argv[
-        "retrieval-mode"];
+        "retrieval-mode"]);
   }
   if ( "u" in _argv ) {
-    user_level =
+    _set(
+      "user",
+      "level",
       _argv[
-        "u"];
+        "u"]);
   }
   if ( "user-level" in _argv ) {
-    user_level =
+    _set(
+      "user",
+      "level",
       _argv[
-        "user-level"];
+        "user-level"]);
   }
+  const
+    _db_paths =
+      _get(
+        "db",
+        "paths");
   if ( "d" in _argv ) {
-    db_paths.push(
+    _db_paths.push(
       _argv[
         "d"]);
   }
   if ( "db-path" in _argv ) {
-    db_paths.push(
+    _db_paths.push(
       _argv[
         "db-paths"]);
   }
+  _set(
+    "db",
+    "paths",
+    _db_paths);
+  const
+    _db_types =
+      _get(
+        "db",
+        "types");
   if ( "t" in _argv ) {
-    db_types.push(
+    _db_types.push(
       _argv[
         "t"]);
   }
   if ( "db-types" in _argv ) {
-    db_types.push(
+    _db_types.push(
       _argv[
         "db-types"]);
   }
+  _set(
+    "db",
+    "types",
+    _db_types);
   if ( "s" in _argv ) {
-    selection_method =
+    _set(
+      "selection",
+      "method",
       _argv[
-        "s"];
+        "s"]);
   }
   if ( "selection-method" in _argv ) {
-    selection_method =
+    _set(
+      "selection",
+      "method",
       _argv[
-        "selection-method"];
+        "selection-method"]);
   }
   if ( "k" in _argv ) {
-    api_key =
-      "y";
+    _set(
+      "api",
+      "key",
+      "y");
   }
   if ( "api-key" in _argv ) {
-    api_key =
-      "y";
+    _set(
+      "api",
+      "key",
+      "y");
   }
   if ( "a" in _argv ) {
-    networks_all =
-      "y";
+    _set(
+      "networks",
+      "all",
+      "y");
   }
   if ( "networks-all" in _argv ) {
-    networks_all =
-      "y";
+    _set(
+      "networks",
+      "all",
+      "y");
   }
   if ( _argv[
          "v"] ||
        _argv[
          "verbose"]) {
-    verbose =
+    _global[
+      "verbose"] =
       true;
   }
-  if ( verbose ) {
-    quiet =
+  if ( _global[
+         "verbose"] ) {
+    _global[
+      "quiet"] =
       "n";
   }
 }
@@ -622,14 +694,26 @@ async function
   _evm_chains_info_cmdline(
     _app_opts) {
   let
-    _result;
+    _result,
+    _results;
+  _results =
+    await _evm_chains_info.apply(
+      null,
+      _app_opts);
   const
+    _results_length =
+      _results.length;
+  const
+    _results_length_type =
+      typeof(
+        _results_length);
+  if ( _results_length_type == "undefined" ) {
     _results =
-      await _evm_chains_info.apply(
-        null,
-        app_opts);
+      Object.keys(
+        _results);
+  }
   for ( _result of _results ) {
-    console.log(
+    _echo(
       _result);
   }
   _exit(
@@ -646,7 +730,7 @@ if ( await _cmdline_check(
 else{
   _url_parse();
 }
-_overrides_set();
+await _overrides_set();
 _config_show();
 app_opts = [
   target_command,
@@ -661,5 +745,5 @@ app_opts = [
   db_paths,
   user_level
 ];
-_evm_chains_info_cmdline(
+await _evm_chains_info_cmdline(
   app_opts);

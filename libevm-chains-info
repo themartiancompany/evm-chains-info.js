@@ -62,6 +62,11 @@ const
   _get =
     _libcrash_module._get;
 /* global
+     _global_get */
+const
+  _global_get =
+    _libcrash_module._global_get;
+/* global
      _homedir_get */
 const
   _homedir_get =
@@ -586,29 +591,42 @@ function
 function
   _input_type_auto_detect() {
   const
+    _target_chain =
+      _get(
+        "target",
+        "chain");
+  const
     _target_chain_type =
       typeof(
-        target_chain);
+        _target_chain);
   if ( _target_chain_type == "number" ) {
-    input_type =
-      "id";
+    _set(
+      "input",
+      "type",
+      "id");
   }
   else if ( _target_chain_type == "string" ) {
-    if ( target_chain.startsWith(
+    if ( _target_chain.startsWith(
            "https://") ) {
-      input_type =
-        "rpc";
+      _set(
+        "input",
+        "type",
+        "rpc");
     }
   }
   if ( input_type == "" ) {
     if ( isNaN(
            target_chain) ) {
-      input_type =
-        "name";
+      _set(
+        "input",
+        "type",
+        "name");
     }
     else {
-      input_type =
-        "id";
+      _set(
+        "input",
+        "type",
+        "id");
     }
   }
 }
@@ -1269,7 +1287,7 @@ async function
         [];
     const
       _results =
-        _evm_chains_info_get(
+        await _evm_chains_info_get(
           _target_chain,
           _retrieval_mode,
           _db_types,
