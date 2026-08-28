@@ -1279,6 +1279,7 @@ async function
     _user_level) {
   let
     _explorer,
+    _msg,
     _result,
     _rpc;
   if ( typeof(
@@ -1334,8 +1335,6 @@ async function
       return _results;
     }
     else if ( _output_type == "id" ) {
-      for ( _result of _results ) {
-      }
       return _results;
     }
     else if ( _output_type == "explorers" ) {
@@ -1360,7 +1359,7 @@ async function
           "_msg":
             _msg
         };
-      throw exception;
+      throw _exception;
     }
   }
   else if ( _target_command == "set" ) {
@@ -1381,10 +1380,9 @@ async function
     return _status;
   }
   else {
-    const
-      _msg =
-        `Unknown command ` +
-        `'${_target_command}'.`;
+    _msg =
+      `Unknown command ` +
+      `'${_target_command}'.`;
     _msg_error(
       _msg,
       1);
