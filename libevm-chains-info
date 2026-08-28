@@ -57,6 +57,11 @@ const
     await import(
       "libcrash-js");
 /* global
+     _echo */
+const
+  _echo =
+    _libcrash_module._echo;
+/* global
      _get */
 const
   _get =
@@ -471,7 +476,7 @@ function
 function
   _all_get(
     _filter_output_type) {
-  console.log(
+  _echo(
     _filter_output_type);
 }
 
@@ -999,9 +1004,15 @@ function
     for ( _entry of _db ) {
       if ( _entry[
              'chainId'] == _target_chain ) {
-        _results.push(
-          _entry[
-            _output_type]);
+        if ( _output_type == "id" ) {
+          _results.push(
+            _target_chain);
+        }
+        else {
+          _results.push(
+            _entry[
+              _output_type]);
+        }
         if ( _selection_method != "all" ) {
           break;
         }
@@ -1106,7 +1117,7 @@ function
       _path_join( [
         _score_dir,
         "offline" ]);
-  console.log(
+  _echo(
     _score_dir);
   if ( ! _file_exists(
            _score_dir) ) {
@@ -1169,7 +1180,8 @@ async function
       await _block_number_get.apply(
          null,
         _block_number_get_args);
-    console.log(_block_number);
+    _echo(
+      _block_number);
     if ( 0 < _block_number ) {
       _msg =
         `RPC '${_rpc}' for network ` +
@@ -1322,6 +1334,8 @@ async function
       return _results;
     }
     else if ( _output_type == "id" ) {
+      for ( _result of _results ) {
+      }
       return _results;
     }
     else if ( _output_type == "explorers" ) {
@@ -1336,6 +1350,17 @@ async function
         }
       }
       return _infos;
+    }
+    else {
+      _msg =
+        "Unknown output type " +
+        `'${_output_type}'.`;
+      const
+        _exception = {
+          "_msg":
+            _msg
+        };
+      throw exception;
     }
   }
   else if ( _target_command == "set" ) {
@@ -1352,7 +1377,7 @@ async function
           _input_type,
           _api_key,
           _db_paths);
-    console.log(_status);
+    _echo(_status);
     return _status;
   }
   else {

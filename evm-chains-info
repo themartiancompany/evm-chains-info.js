@@ -701,6 +701,18 @@ async function
       null,
       _app_opts);
   const
+    _results_type =
+      typeof(
+        _results);
+  if ( _results_type == "undefined"  ) {
+    const
+      _msg =
+        `No results!`;
+    _msg_error(
+      _msg,
+      1);
+  }
+  const
     _results_length =
       _results.length;
   const
