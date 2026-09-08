@@ -209,9 +209,13 @@ async function
           ".config",
           "evm-chains",
           _db_name ]);
+      _msg =
+        `Looking for database '${_db_path}'.`;
+      _msg_info(
+        _msg);
     const
       _db_exists =
-        _file_exists(
+        await _file_exists(
           _db_path);
     if ( _db_exists == true ) {
       _msg =
@@ -242,6 +246,8 @@ async function
     _msg =
       `Found system libraries directory ` +
       `'${_lib}'.`;
+    _msg_info(
+      _msg);
     _db_path =
       _path_join(
         [ _lib,
@@ -381,7 +387,9 @@ async function
        _db_path == "" ) {
     _db_path =
       await _evm_chains_db_path_get(
-        "n");
+        _user_level,
+        _network_chain_id,
+        "");
   }
   if ( typeof(
          _db_types) == "undefined" ) {
@@ -425,7 +433,8 @@ async function
   _rpc_backends_get(
     _networks_chain_ids,
     _selection_method,
-    _db_path) {
+    _db_path,
+    _user_level) {
     let
       _chain_id,
       _rpc_backend_get_opts,
@@ -437,7 +446,10 @@ async function
   if ( _db_path == undefined ) {
     _db_path =
       await _evm_chains_db_path_get(
-        "n");
+        _user_level,
+        _chain_id,
+        [ "node",
+          "system" ]);
   }
   const
     _rpcs =
@@ -446,7 +458,10 @@ async function
     _rpc_backend_get_opts = [
       _chain_id,
       _selection_method,
-      _db_path
+      _db_path,
+      _user_level,
+      [ "node",
+        "system" ]
     ];
     _rpc_backend =
       await _rpc_backend_get.apply(
@@ -727,7 +742,7 @@ async function
     _db =
       await _evm_chains_db_path_get(
         _type_primary,
-        "",
+        _chain_id,
         "unified");
   const
     _db_split =
@@ -739,7 +754,7 @@ async function
     _db_fallback =
       await _evm_chains_db_path_get(
         _type_fallback,
-        "",
+        _chain_id,
         "unified");
   const
     _db_fallback_split =
@@ -1282,6 +1297,12 @@ async function
     _msg,
     _result,
     _rpc;
+  _msg =
+    `Running command '${_target_command}', ` +
+    `retrieving results of type '${_output_type}' ` +
+    `for chain '${_target_chain}'.`;
+  _msg_info(
+    _msg);
   if ( typeof(
          _db_paths) == "undefined" ||
        _db_paths == "" ) {
