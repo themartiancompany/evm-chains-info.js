@@ -1461,8 +1461,7 @@ async function
         _msg_unknown,
         0);
       _echo2(
-        _target_command,
-        0);
+        _target_command);
     }
     throw _msg;
   }
