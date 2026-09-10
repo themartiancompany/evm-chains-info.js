@@ -62,6 +62,11 @@ const
   _echo =
     _libcrash_module._echo;
 /* global
+     _echo2 */
+const
+  _echo2 =
+    _libcrash_module._echo2;
+/* global
      _get */
 const
   _get =
@@ -1455,7 +1460,7 @@ async function
       _msg_error(
         _msg_unknown,
         0);
-      _msg_error(
+      _echo2(
         _target_command,
         0);
     }
