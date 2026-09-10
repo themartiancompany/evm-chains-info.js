@@ -1456,7 +1456,8 @@ async function
         _msg_unknown,
         0);
       _msg_error(
-        _target_command);
+        _target_command,
+        0);
     }
     throw _msg;
   }
