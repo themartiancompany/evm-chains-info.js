@@ -159,7 +159,9 @@ async function
   let
     _db_name,
     _db_path,
-    _msg;
+    _exception,
+    _msg,
+    _lib;
   if ( typeof(
          _user) == "undefined" ||
        _user == "" ) {
@@ -236,23 +238,43 @@ async function
       _msg =
         "wat";
       _msg_error(
-        _msg);
+        _msg,
+        1);
     }
   }
   else if ( _user == "n" ) {
-    const
+    _msg =
+      `Retrieving system libraries directory.`;
+    _msg_info(
+      _msg);
+    try {
       _lib =
-        await _lib_get();
+        await _lib_get(
+          "y",
+          "n");
+    }
+    catch(
+      _error) {
+      _msg_error(
+        _msg,
+        0);
+      _exception = {
+        "msg":
+          _msg
+      };
+      throw _exception;
+    }
     _msg =
       `Found system libraries directory ` +
       `'${_lib}'.`;
     _msg_info(
       _msg);
     _db_path =
-      _path_join(
-        [ _lib,
-          "evm-chains",
-          _db_name ]);
+      _path_join([
+        _lib,
+        "evm-chains",
+        _db_name
+      ]);
   }
   else {
     _msg =
@@ -261,6 +283,11 @@ async function
     _msg_error(
       _msg,
       0);
+    _exception = {
+      "msg":
+        _msg
+    };
+    throw _exception;
   }
   return _db_path;
 }
@@ -1310,10 +1337,18 @@ async function
       [];
   }
   if ( _db_paths.length == 0 ) {
-    _db_paths =
-      await _db_paths_get(
-        _target_chain,
-        _user_level);
+    try {
+      _db_paths =
+        await _db_paths_get(
+          _target_chain,
+          _user_level);
+    }
+    catch(
+      _error) {
+      _msg_error(
+        _error,
+        0);
+    }
   }
   if ( _target_command == "get" ) {
     const
