@@ -1436,12 +1436,29 @@ async function
     return _status;
   }
   else {
+    const
+      _target_command_type =
+        typeof(
+          _target_command);
     _msg =
       `Unknown command ` +
       `'${_target_command}'.`;
-    _msg_error(
-      _msg,
-      1);
+    if ( _target_command_type === "string" ) {
+      _msg_error(
+        _msg,
+        0);
+    }
+    else if ( _target_command_type === "object" ) {
+      const
+        _msg_unkwnown =
+          `Unknown command:`;
+      _msg_error(
+        _msg_unknown,
+        0);
+      _msg_error(
+        _target_command);
+    }
+    throw _msg;
   }
 }
 
