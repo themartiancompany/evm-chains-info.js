@@ -1450,7 +1450,7 @@ async function
     }
     else if ( _target_command_type === "object" ) {
       const
-        _msg_unkwnown =
+        _msg_unknown =
           `Unknown command:`;
       _msg_error(
         _msg_unknown,
