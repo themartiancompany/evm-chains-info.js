@@ -2,7 +2,7 @@
   "name":
     "evm-chains-info",
   "version":
-    "0.0.38",
+    "0.0.39",
   "description":
     "Returns information about Ethereum Virtual Machine (EVM) blockchains.",
   "funding": {
@@ -83,15 +83,15 @@
   },
   "optionalDependencies": {
     "evm-wallet":
-      "npm:evm-wallet.js@^0.0.99"
+      "npm:evm-wallet.js@^0.0.100"
   },
   "overrides": {
     "evm-chains-info":
       "./libevm-chains-info",
     "evm-contracts-tools":
-      "^0.0.62",
+      "^0.0.64",
     "evm-wallet":
-      "npm:evm-wallet.js@^0.0.99"
+      "npm:evm-wallet.js@^0.0.100"
   },
   "type":
     "module",
