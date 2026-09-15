@@ -122,6 +122,11 @@ const
   _msg_error =
     _libcrash_module._msg_error;
 /* global
+     _override_set */
+const
+  _override_set =
+    _libcrash_module._override_set;
+/* global
      _path_join */
 const
   _path_join =
@@ -902,6 +907,7 @@ async function
   _target_network_type_auto_detect() {
   let
     _info_get,
+    _msg,
     _target_network,
     _target_network_type;
   _target_network =
@@ -1408,7 +1414,7 @@ async function
       _error) {
       _msg =
         "Error running '_evm_chains_info_get' " +
-        "with arguments:"
+        "with arguments:";
       _msg_error(
         _msg,
         0);
