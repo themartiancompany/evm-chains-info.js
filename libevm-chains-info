@@ -902,20 +902,26 @@ async function
   _target_network_type_auto_detect() {
   let
     _info_get,
+    _target_network,
     _target_network_type;
+  _target_network =
+    _get(
+      "target",
+      "network");
   _info_get =
     false;
   _target_network_type =
     typeof(
-      target_network);
-  if ( _target_network_type == "undefined" ||
-       target_network == "" ) {
-    target_network = 100;
+      _target_network);
+  if ( _target_network_type === "undefined" ||
+       _target_network === "" ) {
+    _target_network =
+      100;
     _target_network_type =
       typeof(
-        target_network);
+        _target_network);
   }
-  if ( _target_network_type == "number" ) {
+  if ( _target_network_type === "number" ) {
     _info_get =
       true;
   }
@@ -933,7 +939,8 @@ async function
         `for network variable.`;
     _msg_error(
       _msg,
-      1);
+      0);
+    throw _msg;
   }
   if ( _info_get ) {
     const
@@ -943,11 +950,31 @@ async function
     const
       _rpc_get =
         _libevm_module._rpc_get;
-    target_network =
-      _rpc_get(
-        [ target_network ])[
-        target_network];
+    try {
+      const
+      _rpc =
+        await _rpc_get(
+          [ target_network ]);
+      _target_network =
+        _rpc[
+          _target_network];
+    }
+    catch(
+      _error) {
+      _msg =
+        "Error while running '_rpc_get'.";
+      _msg_error(
+        _msg,
+        0);
+      _echo2(
+        _error);
+      throw _error;
+    }
   }
+  _override_set(
+    "target",
+    "network",
+    _target_network);
 }
  
 function
@@ -1032,9 +1059,8 @@ function
             _msg =
               `No results found for network ` +
               `'${_target_chain}'.`;
-            _msg_error(
-              _msg,
-              0);
+            _msg_info(
+              _msg);
           }
         }
         else if ( _input_type == "amount" ) {
@@ -1328,6 +1354,7 @@ async function
     _explorer,
     _msg,
     _result,
+    _results,
     _rpc;
   _msg =
     `Running command '${_target_command}', ` +
@@ -1360,17 +1387,37 @@ async function
       _infos =
         [];
     const
+      _evm_chains_info_get_args = [
+        _target_chain,
+        _retrieval_mode,
+        _db_types,
+        _input_type,
+        _output_type,
+        _selection_method,
+        _networks_all,
+        _api_key,
+        _db_paths
+      ];
+    try {
       _results =
-        await _evm_chains_info_get(
-          _target_chain,
-          _retrieval_mode,
-          _db_types,
-          _input_type,
-          _output_type,
-          _selection_method,
-          _networks_all,
-          _api_key,
-          _db_paths);
+        await _evm_chains_info_get.apply(
+          null,
+          _evm_chains_info_get_args);
+    }
+    catch(
+      _error) {
+      _msg =
+        "Error running '_evm_chains_info_get' " +
+        "with arguments:"
+      _msg_error(
+        _msg,
+        0);
+      _echo2(
+        _evm_chains_info_get_args);
+      _echo2(
+        _error);
+      throw _error;
+    }
     if ( _output_type == "rpc" ) {
       for ( _result of _results ) {
         for ( _rpc of _result) {
@@ -1437,7 +1484,8 @@ async function
           _input_type,
           _api_key,
           _db_paths);
-    _echo(_status);
+    _echo(
+      _status);
     return _status;
   }
   else {
