@@ -616,9 +616,23 @@ function
     //     _filter_output_type);
     // _json_read(
     //   _db_path);
-    _db =
-      _json_read(
-        _db_path);
+    try {
+      _db =
+        _json_read(
+          _db_path);
+    }
+    catch(
+      _error) {
+      _msg =
+        "Error reading database at " +
+        `location '${_db_path}'.`;
+      _msg_error(
+        _msg,
+        0);
+      _echo2(
+        _error);
+      throw _error;
+    }
     _msg =
       `Database '${_db_path}' ` +
       `contains '${_db.length}' items.`;
